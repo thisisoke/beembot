@@ -1,0 +1,118 @@
+.input-bar-wrapper {
+  flex-shrink: 0;
+  background: #f5f6fa;
+  border-top: 1px solid #e8e8f0;
+}
+
+/* ── Account bar ── */
+
+.account-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  background: white;
+  border: none;
+  border-bottom: 1px solid #e8e8f0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3c3c50;
+  transition: background 0.15s;
+}
+
+.account-bar:hover {
+  background: #f0f0f8;
+}
+
+.account-bar-label {
+  flex: 1;
+  text-align: left;
+}
+
+/* ── Input form ── */
+
+.input-bar {
+  padding: 10px 16px 8px;
+}
+
+.input-field-wrapper {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1.5px solid #dcdce5;
+  border-radius: 24px;
+  padding: 4px 6px 4px 16px;
+  transition: border-color 0.15s;
+}
+
+.input-field-wrapper:focus-within {
+  border-color: #5c6bc0;
+}
+
+.input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a2e;
+  background: transparent;
+  padding: 8px 0;
+}
+
+.input-field::placeholder {
+  color: #a0a0b0;
+}
+
+.input-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.input-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.input-icon-btn:hover {
+  background: #f0f0f8;
+}
+
+.input-send-btn {
+  background: #1565c0;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.input-send-btn:hover {
+  background: #0d47a1;
+}
+
+.input-send-btn:disabled {
+  background: #b0b4c8;
+  cursor: not-allowed;
+}
+
+/* ── Character count ── */
+
+.input-char-count {
+  text-align: right;
+  font-size: 11px;
+  color: #a0a0b0;
+  padding: 4px 4px 0;
+}
