@@ -4,14 +4,14 @@ import './PhoneContainer.css';
 // iPhone 15 Pro logical resolution (points)
 const PHONE_WIDTH = 393;
 const PHONE_HEIGHT = 852;
-const DESKTOP_MIN = 600;
-const WRAPPER_PADDING = 48; // 24px × 2
+const DESKTOP_MIN = 1080; // Raised to accommodate wider left panels
 
 interface PhoneContainerProps {
   children: ReactNode;
+  leftPanels?: ReactNode;
 }
 
-export function PhoneContainer({ children }: PhoneContainerProps) {
+export function PhoneContainer({ children, leftPanels }: PhoneContainerProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const [isDesktop, setIsDesktop] = useState(
@@ -20,9 +20,10 @@ export function PhoneContainer({ children }: PhoneContainerProps) {
 
   const [scale, setScale] = useState(() => {
     if (typeof window === 'undefined' || window.innerWidth < DESKTOP_MIN) return 1;
-    const availW = window.innerWidth - WRAPPER_PADDING;
-    const availH = window.innerHeight - WRAPPER_PADDING;
-    return Math.min(1, availW / PHONE_WIDTH, availH / PHONE_HEIGHT);
+    // On desktop, the phone gets roughly 50% of the width (right side)
+    const phoneAreaW = window.innerWidth * 0.5;
+    const availH = window.innerHeight - 48;
+    return Math.min(1, phoneAreaW / PHONE_WIDTH, availH / PHONE_HEIGHT);
   });
 
   const recalc = useCallback(() => {
@@ -37,9 +38,10 @@ export function PhoneContainer({ children }: PhoneContainerProps) {
       return;
     }
 
-    const availW = el.clientWidth - WRAPPER_PADDING;
-    const availH = el.clientHeight - WRAPPER_PADDING;
-    setScale(Math.min(1, availW / PHONE_WIDTH, availH / PHONE_HEIGHT));
+    // Phone gets the right portion; panels take the left
+    const phoneAreaW = el.clientWidth * 0.48;
+    const availH = el.clientHeight - 48;
+    setScale(Math.min(1, phoneAreaW / PHONE_WIDTH, availH / PHONE_HEIGHT));
   }, []);
 
   useEffect(() => {
@@ -54,31 +56,41 @@ export function PhoneContainer({ children }: PhoneContainerProps) {
   }, [recalc]);
 
   return (
-    <div className="phone-wrapper" ref={wrapperRef}>
-      <div
-        className="phone-scale-container"
-        style={
-          isDesktop
-            ? { width: PHONE_WIDTH * scale, height: PHONE_HEIGHT * scale }
-            : undefined
-        }
-      >
+    <div className={`phone-wrapper ${isDesktop ? 'phone-wrapper--desktop' : ''}`} ref={wrapperRef}>
+      {/* Left panels — desktop only */}
+      {isDesktop && leftPanels && (
+        <aside className="desktop-left-panels">
+          {leftPanels}
+        </aside>
+      )}
+
+      {/* Phone prototype */}
+      <div className="phone-area">
         <div
-          className="phone-frame"
+          className="phone-scale-container"
           style={
             isDesktop
-              ? {
-                  width: PHONE_WIDTH,
-                  height: PHONE_HEIGHT,
-                  transform: `scale(${scale})`,
-                  transformOrigin: 'top left',
-                }
+              ? { width: PHONE_WIDTH * scale, height: PHONE_HEIGHT * scale }
               : undefined
           }
         >
-          <div className="phone-notch" />
-          <div className="phone-screen">
-            {children}
+          <div
+            className="phone-frame"
+            style={
+              isDesktop
+                ? {
+                    width: PHONE_WIDTH,
+                    height: PHONE_HEIGHT,
+                    transform: `scale(${scale})`,
+                    transformOrigin: 'top left',
+                  }
+                : undefined
+            }
+          >
+            <div className="phone-notch" />
+            <div className="phone-screen">
+              {children}
+            </div>
           </div>
         </div>
       </div>
