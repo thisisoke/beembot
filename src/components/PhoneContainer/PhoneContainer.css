@@ -1,0 +1,67 @@
+/* ── Mobile: full screen, no frame ── */
+
+.phone-wrapper {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8eaf6;
+}
+
+.phone-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f5f6fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.phone-notch {
+  display: none;
+}
+
+.phone-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── Desktop: phone-like container ── */
+
+@media (min-width: 600px) {
+  .phone-wrapper {
+    padding: 24px;
+    background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%);
+  }
+
+  .phone-frame {
+    width: 390px;
+    max-width: 390px;
+    height: 844px;
+    max-height: calc(100dvh - 48px);
+    border-radius: 40px;
+    box-shadow:
+      0 0 0 8px #1a1a2e,
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .phone-notch {
+    display: block;
+    width: 120px;
+    height: 28px;
+    background: #1a1a2e;
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
+
+  .phone-screen {
+    border-radius: 0 0 32px 32px;
+  }
+}
