@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Download, Upload, FileText, FileSpreadsheet, FileJson, File } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import './DataFilesPanel.css';
 
-interface DataFile {
+export interface DataFile {
   name: string;
   description: string;
   isUploaded?: boolean;
@@ -16,7 +18,11 @@ function getFileIcon(name: string) {
   return <File size={14} />;
 }
 
-export function DataFilesPanel() {
+interface DataFilesPanelProps {
+  onFilesChange?: (files: DataFile[]) => void;
+}
+
+export function DataFilesPanel({ onFilesChange }: DataFilesPanelProps) {
   const [files, setFiles] = useState<DataFile[]>([]);
   const [loading, setLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -28,6 +34,7 @@ export function DataFilesPanel() {
         if (res.ok) {
           const manifest: DataFile[] = await res.json();
           setFiles(manifest);
+          onFilesChange?.(manifest);
         }
       } catch {
         // Manifest not available
@@ -35,11 +42,11 @@ export function DataFilesPanel() {
       setLoading(false);
     }
     loadManifest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDownload = useCallback(async (file: DataFile) => {
     if (file.isUploaded && file.content) {
-      // Download uploaded file from memory
       const blob = new Blob([file.content], { type: 'application/octet-stream' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -48,10 +55,8 @@ export function DataFilesPanel() {
       a.click();
       URL.revokeObjectURL(url);
     } else {
-      // Download from public folder
-      const url = `/data-and-files/${file.name}`;
       const a = document.createElement('a');
-      a.href = url;
+      a.href = `/data-and-files/${file.name}`;
       a.download = file.name;
       a.click();
     }
@@ -70,7 +75,6 @@ export function DataFilesPanel() {
       reader.onload = () => {
         const content = reader.result as string;
         setFiles((prev) => {
-          // Replace if same name exists, otherwise append
           const exists = prev.findIndex((f) => f.name === file.name);
           const newFile: DataFile = {
             name: file.name,
@@ -78,29 +82,27 @@ export function DataFilesPanel() {
             isUploaded: true,
             content,
           };
-          if (exists >= 0) {
-            const next = [...prev];
-            next[exists] = newFile;
-            return next;
-          }
-          return [...prev, newFile];
+          const next = exists >= 0
+            ? prev.map((f, i) => (i === exists ? newFile : f))
+            : [...prev, newFile];
+          onFilesChange?.(next);
+          return next;
         });
       };
       reader.readAsText(file);
     });
 
-    // Reset input so the same file can be re-uploaded
     e.target.value = '';
-  }, []);
+  }, [onFilesChange]);
 
   return (
-    <div className="data-files-panel">
-      <div className="data-files-header">
-        <h2 className="data-files-title">Data &amp; Files</h2>
-        <button className="data-files-upload-btn" onClick={handleUpload} title="Upload a file">
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm">Data & Files</CardTitle>
+        <Button variant="outline" size="sm" onClick={handleUpload}>
           <Upload size={14} />
-          <span>Upload</span>
-        </button>
+          Upload
+        </Button>
         <input
           ref={fileInputRef}
           type="file"
@@ -109,13 +111,15 @@ export function DataFilesPanel() {
           style={{ display: 'none' }}
           accept=".csv,.json,.md,.txt,.xlsx,.pdf"
         />
-      </div>
+      </CardHeader>
 
-      <div className="data-files-body">
+      <CardContent>
         {loading ? (
-          <div className="data-files-loading">Loading files...</div>
+          <p className="text-xs text-muted-foreground text-center py-4">Loading files...</p>
         ) : files.length === 0 ? (
-          <div className="data-files-empty">No files available. Upload files to get started.</div>
+          <p className="text-xs text-muted-foreground text-center py-4">
+            No files available. Upload files to get started.
+          </p>
         ) : (
           <ul className="data-files-list">
             {files.map((file) => (
@@ -127,18 +131,19 @@ export function DataFilesPanel() {
                     <span className="data-file-desc">{file.description}</span>
                   </div>
                 </div>
-                <button
-                  className="data-file-download-btn"
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => handleDownload(file)}
                   title={`Download ${file.name}`}
                 >
                   <Download size={13} />
-                </button>
+                </Button>
               </li>
             ))}
           </ul>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

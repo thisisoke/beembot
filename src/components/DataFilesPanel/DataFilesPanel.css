@@ -1,85 +1,24 @@
-.data-files-panel {
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.data-files-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.data-files-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
-  letter-spacing: 0.02em;
-}
-
-.data-files-upload-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.data-files-upload-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: white;
-}
-
-.data-files-body {
-  padding: 8px 12px 12px;
-  overflow-y: auto;
-  flex: 1;
-  min-height: 0;
-}
-
-.data-files-loading,
-.data-files-empty {
-  padding: 16px;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 12px;
-  text-align: center;
-}
-
+/* Data files list */
 .data-files-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .data-file-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 8px;
+  border-radius: var(--radius-md);
   transition: background 0.15s ease;
 }
 
 .data-file-item:hover {
-  background: rgba(255, 255, 255, 0.09);
+  background: var(--color-muted);
 }
 
 .data-file-info {
@@ -91,7 +30,7 @@
 }
 
 .data-file-icon {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-muted-foreground);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -106,7 +45,7 @@
 .data-file-name {
   font-size: 12px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-foreground);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -114,28 +53,8 @@
 
 .data-file-desc {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--color-muted-foreground);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.data-file-download-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  flex-shrink: 0;
-}
-
-.data-file-download-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.9);
 }

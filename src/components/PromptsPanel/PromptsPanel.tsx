@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Save } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import './PromptsPanel.css';
 
 interface PromptSection {
@@ -34,7 +34,6 @@ interface PromptsPanelProps {
 
 export function PromptsPanel({ onPromptsChange }: PromptsPanelProps) {
   const [prompts, setPrompts] = useState<PromptValues>({});
-  const [savedNotice, setSavedNotice] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -71,37 +70,29 @@ export function PromptsPanel({ onPromptsChange }: PromptsPanelProps) {
     [onPromptsChange],
   );
 
-  const handleSave = useCallback(() => {
-    setSavedNotice(true);
-    setTimeout(() => setSavedNotice(false), 2000);
-  }, []);
-
   if (loading) {
     return (
-      <div className="prompts-panel">
-        <div className="prompts-panel-header">
-          <h2 className="prompts-panel-title">Prompts</h2>
-        </div>
-        <div className="prompts-panel-loading">Loading prompts...</div>
-      </div>
+      <Card className="flex-1 min-h-0 flex flex-col">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm">Prompts</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-xs text-muted-foreground text-center py-4">Loading prompts...</p>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="prompts-panel">
-      <div className="prompts-panel-header">
-        <h2 className="prompts-panel-title">Prompts</h2>
-        <button className="prompts-save-btn" onClick={handleSave} title="Save prompts for this session">
-          <Save size={14} />
-          <span>{savedNotice ? 'Saved!' : 'Save'}</span>
-        </button>
-      </div>
-
-      <div className="prompts-panel-body">
+    <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm">Prompts</CardTitle>
+      </CardHeader>
+      <CardContent className="flex-1 min-h-0 overflow-y-auto">
         <Accordion type="multiple" defaultValue={['system-prompt']}>
           {PROMPT_SECTIONS.map((section) => (
             <AccordionItem key={section.key} value={section.key}>
-              <AccordionTrigger className="text-white/90 hover:text-white text-xs">
+              <AccordionTrigger className="text-xs">
                 {section.label}
               </AccordionTrigger>
               <AccordionContent>
@@ -115,7 +106,7 @@ export function PromptsPanel({ onPromptsChange }: PromptsPanelProps) {
             </AccordionItem>
           ))}
         </Accordion>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
