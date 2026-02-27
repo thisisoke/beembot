@@ -4,7 +4,7 @@ import './PhoneContainer.css';
 // iPhone 15 Pro logical resolution (points)
 const PHONE_WIDTH = 393;
 const PHONE_HEIGHT = 852;
-const DESKTOP_MIN = 900; // Raised to accommodate left panels
+const DESKTOP_MIN = 1080; // Raised to accommodate wider left panels
 
 interface PhoneContainerProps {
   children: ReactNode;
