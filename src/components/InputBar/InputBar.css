@@ -65,28 +65,6 @@
   color: #a0a0b0;
 }
 
-.input-actions {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.input-icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background 0.15s;
-}
-
-.input-icon-btn:hover {
-  background: #f0f0f8;
-}
-
 .input-send-btn {
   background: #1565c0;
   border: none;
