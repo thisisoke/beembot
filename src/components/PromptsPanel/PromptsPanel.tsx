@@ -22,6 +22,7 @@ const PROMPT_SECTIONS: PromptSection[] = [
     label: 'Topical Conversation Guidelines',
     filename: 'topical-conversation-guidelines.md',
   },
+  { key: 'edge-cases', label: 'Edge Case Library', filename: 'edge-cases.md' },
 ];
 
 export interface PromptValues {

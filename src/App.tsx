@@ -17,6 +17,7 @@ const PROMPT_FILENAMES: Record<string, string> = {
   'system-prompt': 'system-prompt.md',
   'guardrails-specs': 'guardrails-specs.md',
   'topical-conversation-guidelines': 'topical-conversation-guidelines.md',
+  'edge-cases': 'edge-cases.md',
 };
 
 function App() {
