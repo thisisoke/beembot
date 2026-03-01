@@ -33,8 +33,25 @@ export function DataFilesPanel({ onFilesChange }: DataFilesPanelProps) {
         const res = await fetch('/data-and-files/manifest.json');
         if (res.ok) {
           const manifest: DataFile[] = await res.json();
-          setFiles(manifest);
-          onFilesChange?.(manifest);
+
+          // Also fetch the content of each built-in file so it can be
+          // sent to the LLM as reference data.
+          const filesWithContent = await Promise.all(
+            manifest.map(async (file) => {
+              try {
+                const contentRes = await fetch(`/data-and-files/${file.name}`);
+                if (contentRes.ok) {
+                  return { ...file, content: await contentRes.text() };
+                }
+              } catch {
+                // Content fetch failed — file will be listed but without content
+              }
+              return file;
+            }),
+          );
+
+          setFiles(filesWithContent);
+          onFilesChange?.(filesWithContent);
         }
       } catch {
         // Manifest not available
