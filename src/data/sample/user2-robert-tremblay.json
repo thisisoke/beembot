@@ -1,0 +1,825 @@
+{
+  "_meta": {
+    "userId": "user-002",
+    "persona": "Robert Tremblay — Conservative near-retiree focused on income",
+    "age": 58,
+    "lifeStage": "Pre-retirement, capital preservation & income",
+    "riskTolerance": "Income (INC)",
+    "totalPortfolioCAD": 847200
+  },
+  "userProfile": {
+    "userProfile": {
+      "firstName": "Robert",
+      "loginId": "RTREMB-5802",
+      "encryptedClientId": "kP4rSt7uVwXyZa2bCd5eFg==",
+      "applicationId": "IL_AD",
+      "language": "en-CA",
+      "lastLoginDateTime": "2026-02-27T14:22:00",
+      "sessionInactiveTimeout": 900,
+      "optedFlag": true,
+      "adPremium": true,
+      "st": "b7c93d1e5f2a8064",
+      "pilotUser": false,
+      "ownerInd": true,
+      "ownerJoint": true,
+      "totalTradeCount": 156,
+      "kycDueDateSR": "2027-09-20",
+      "appcues": {
+        "clientCreatedDate": "2015-06-14 09:30:45",
+        "adFundedAccountFlag": "TRUE",
+        "sdFundedAccountFlag": "TRUE",
+        "offeringCodeFlag": "BT",
+        "tradeFlag": "TRUE"
+      }
+    }
+  },
+  "accounts": {
+    "data": {
+      "getAccountHoldingsSummary": {
+        "asOfDate": "2026-02-28T16:30:00",
+        "baseFund": "CAD",
+        "usExchangeRate": 1.3843,
+        "accounts": [
+          {
+            "accountId": "b2c3d4e5-2222-4000-b000-000000000001",
+            "accountNumber": "30200201",
+            "encryptedAccountNumber": "mN0pQr3sTu5vWxYz==",
+            "tradingAgent": false,
+            "accountType": "RRSP",
+            "accountNickName": "Robert's RRSP",
+            "accountStatusCode": "ACTIVE",
+            "accountOpenDate": "Tue Jun 20 00:00:00 EST 2015",
+            "primary": true,
+            "selected": true,
+            "totalGainLoss": 189450.30,
+            "totalGainLossPercentage": 42.18,
+            "investmentGainLoss": 183200.30,
+            "investmentGainLossPercentage": 45.80,
+            "dailyGainLoss": -1230.50,
+            "dailyGainLossPercentage": -0.18,
+            "serviceOfferingType": "IL_AD",
+            "accountAttribute": "CASH",
+            "optionTrdElgFlag": false,
+            "summary": {
+              "tradingDayCashValue": 42150.80,
+              "buyingPower": 42150.80,
+              "marketValue": 583049.20,
+              "accountBalance": 625200.00,
+              "realTimeCashDeposit": 0.0
+            },
+            "securityDetails": [
+              {
+                "tickerSymbol": "",
+                "symbol": "REALCASH",
+                "securityDescription": "CASH BALANCE",
+                "securityTypeDesc": "",
+                "securityFund": "CAD",
+                "assetClassCode": "C",
+                "quantity": 42150.80,
+                "averageCost": 0.0,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 0.0,
+                "gainLossPercentageInCAD": 0.0,
+                "marketValueInCAD": 42150.80,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": null,
+                "cusip": null,
+                "valid": false,
+                "delisted": false,
+                "exchange": { "country": null, "code": "UNDEFINED" },
+                "investmentProduct": null
+              },
+              {
+                "tickerSymbol": "ZWB",
+                "symbol": "ZWB",
+                "securityDescription": "BMO COVERED CALL CDN BANKS ETF",
+                "securityTypeDesc": "ETF",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 3500.0,
+                "averageCost": 17.20,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 11550.00,
+                "gainLossPercentageInCAD": 19.18,
+                "marketValueInCAD": 71750.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "05580M104",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": true,
+                  "securityType": "21",
+                  "adRating": { "rating": 73, "mgdSntmntSgnl": "NEUTRAL", "risk": "L" }
+                }
+              },
+              {
+                "tickerSymbol": "ENB",
+                "symbol": "ENB",
+                "securityDescription": "ENBRIDGE INC",
+                "securityTypeDesc": "COMMON STOCK",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 1500.0,
+                "averageCost": 38.75,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 27750.00,
+                "gainLossPercentageInCAD": 47.74,
+                "marketValueInCAD": 85875.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "29250N105",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": false,
+                  "securityType": "21",
+                  "adRating": { "rating": 68, "mgdSntmntSgnl": "NEUTRAL", "risk": "L" }
+                }
+              },
+              {
+                "tickerSymbol": "BCE",
+                "symbol": "BCE",
+                "securityDescription": "BCE INC",
+                "securityTypeDesc": "COMMON STOCK",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 800.0,
+                "averageCost": 52.10,
+                "settlementFund": "CAD",
+                "gainLossInCAD": -5680.00,
+                "gainLossPercentageInCAD": -13.63,
+                "marketValueInCAD": 36000.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "05534B760",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": false,
+                  "securityType": "21",
+                  "adRating": { "rating": 42, "mgdSntmntSgnl": "NEGATIVE", "risk": "M" }
+                }
+              },
+              {
+                "tickerSymbol": "TD",
+                "symbol": "TD",
+                "securityDescription": "TORONTO-DOMINION BANK",
+                "securityTypeDesc": "COMMON STOCK",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 400.0,
+                "averageCost": 68.90,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 7960.00,
+                "gainLossPercentageInCAD": 28.89,
+                "marketValueInCAD": 35520.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "891160509",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": false,
+                  "securityType": "21",
+                  "adRating": { "rating": 61, "mgdSntmntSgnl": "NEGATIVE", "risk": "L" }
+                }
+              },
+              {
+                "tickerSymbol": "XBB",
+                "symbol": "XBB",
+                "securityDescription": "ISHARES CORE CDN UNIVERSE BOND INDEX ETF",
+                "securityTypeDesc": "ETF",
+                "securityFund": "CAD",
+                "assetClassCode": "F",
+                "quantity": 4200.0,
+                "averageCost": 28.50,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 5460.00,
+                "gainLossPercentageInCAD": 4.56,
+                "marketValueInCAD": 125160.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "46432B106",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "F",
+                  "etf": true,
+                  "securityType": "36",
+                  "adRating": null
+                }
+              },
+              {
+                "tickerSymbol": "ZAG",
+                "symbol": "ZAG",
+                "securityDescription": "BMO AGGREGATE BOND INDEX ETF",
+                "securityTypeDesc": "ETF",
+                "securityFund": "CAD",
+                "assetClassCode": "F",
+                "quantity": 6000.0,
+                "averageCost": 14.20,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 3540.00,
+                "gainLossPercentageInCAD": 4.15,
+                "marketValueInCAD": 88740.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "05578B208",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "F",
+                  "etf": true,
+                  "securityType": "36",
+                  "adRating": null
+                }
+              },
+              {
+                "tickerSymbol": "CLF",
+                "symbol": "CLF",
+                "securityDescription": "ISHARES 1-5 YR LADDERED CORP BOND INDEX ETF",
+                "securityTypeDesc": "ETF",
+                "securityFund": "CAD",
+                "assetClassCode": "F",
+                "quantity": 5500.0,
+                "averageCost": 18.90,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 2750.00,
+                "gainLossPercentageInCAD": 2.65,
+                "marketValueInCAD": 106700.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "46433L106",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "F",
+                  "etf": true,
+                  "securityType": "36",
+                  "adRating": null
+                }
+              },
+              {
+                "tickerSymbol": "FTS",
+                "symbol": "FTS",
+                "securityDescription": "FORTIS INC",
+                "securityTypeDesc": "COMMON STOCK",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 500.0,
+                "averageCost": 48.30,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 8450.00,
+                "gainLossPercentageInCAD": 35.01,
+                "marketValueInCAD": 32604.20,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "349553107",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": false,
+                  "securityType": "21",
+                  "adRating": { "rating": 72, "mgdSntmntSgnl": "POSITIVE", "risk": "L" }
+                }
+              },
+              {
+                "tickerSymbol": "BNS",
+                "symbol": "BNS",
+                "securityDescription": "BANK OF NOVA SCOTIA",
+                "securityTypeDesc": "COMMON STOCK",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 100.0,
+                "averageCost": 62.40,
+                "settlementFund": "CAD",
+                "gainLossInCAD": -1920.00,
+                "gainLossPercentageInCAD": -30.77,
+                "marketValueInCAD": 700.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "064149107",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": false,
+                  "securityType": "21",
+                  "adRating": { "rating": 55, "mgdSntmntSgnl": "NEGATIVE", "risk": "L" }
+                }
+              }
+            ],
+            "cashDetails": [
+              { "currency": "CAD", "cashValue": 42150.80 }
+            ],
+            "investmentTotalMarketValue": 583049.20
+          },
+          {
+            "accountId": "b2c3d4e5-2222-4000-b000-000000000002",
+            "accountNumber": "30200202",
+            "encryptedAccountNumber": "oP1qRs4tUv6wXyZa==",
+            "tradingAgent": false,
+            "accountType": "JOINT",
+            "accountNickName": "Robert & Marie Tremblay",
+            "accountStatusCode": "ACTIVE",
+            "accountOpenDate": "Thu Jan 15 00:00:00 EST 2016",
+            "primary": false,
+            "selected": false,
+            "totalGainLoss": 48920.10,
+            "totalGainLossPercentage": 28.25,
+            "investmentGainLoss": 48920.10,
+            "investmentGainLossPercentage": 31.50,
+            "dailyGainLoss": -420.30,
+            "dailyGainLossPercentage": -0.19,
+            "serviceOfferingType": "IL_AD",
+            "accountAttribute": "MARGIN",
+            "optionTrdElgFlag": false,
+            "summary": {
+              "tradingDayCashValue": 18200.40,
+              "buyingPower": 240300.80,
+              "marketValue": 203749.60,
+              "accountBalance": 221950.00,
+              "realTimeCashDeposit": 0.0
+            },
+            "securityDetails": [
+              {
+                "tickerSymbol": "",
+                "symbol": "REALCASH",
+                "securityDescription": "CASH BALANCE",
+                "securityTypeDesc": "",
+                "securityFund": "CAD",
+                "assetClassCode": "C",
+                "quantity": 18200.40,
+                "averageCost": 0.0,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 0.0,
+                "gainLossPercentageInCAD": 0.0,
+                "marketValueInCAD": 18200.40,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": null,
+                "cusip": null,
+                "valid": false,
+                "delisted": false,
+                "exchange": { "country": null, "code": "UNDEFINED" },
+                "investmentProduct": null
+              },
+              {
+                "tickerSymbol": "XEI",
+                "symbol": "XEI",
+                "securityDescription": "ISHARES S&P/TSX COMPOSITE HIGH DIV INDEX ETF",
+                "securityTypeDesc": "ETF",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 2800.0,
+                "averageCost": 22.80,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 9240.00,
+                "gainLossPercentageInCAD": 14.47,
+                "marketValueInCAD": 73080.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "46434G109",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": true,
+                  "securityType": "21",
+                  "adRating": { "rating": 70, "mgdSntmntSgnl": "NEUTRAL", "risk": "L" }
+                }
+              },
+              {
+                "tickerSymbol": "TRP",
+                "symbol": "TRP",
+                "securityDescription": "TC ENERGY CORP",
+                "securityTypeDesc": "COMMON STOCK",
+                "securityFund": "CAD",
+                "assetClassCode": "E",
+                "quantity": 600.0,
+                "averageCost": 48.90,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 14340.00,
+                "gainLossPercentageInCAD": 48.87,
+                "marketValueInCAD": 43680.00,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "87807B107",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "E",
+                  "etf": false,
+                  "securityType": "21",
+                  "adRating": { "rating": 75, "mgdSntmntSgnl": "POSITIVE", "risk": "L" }
+                }
+              },
+              {
+                "tickerSymbol": "CBO",
+                "symbol": "CBO",
+                "securityDescription": "ISHARES 1-10 YR LADDERED CORP BOND INDEX ETF",
+                "securityTypeDesc": "ETF",
+                "securityFund": "CAD",
+                "assetClassCode": "F",
+                "quantity": 4500.0,
+                "averageCost": 18.40,
+                "settlementFund": "CAD",
+                "gainLossInCAD": 3150.00,
+                "gainLossPercentageInCAD": 3.80,
+                "marketValueInCAD": 86989.60,
+                "currencyIndicator": "CAD",
+                "holdingFund": "CAD",
+                "country": "C",
+                "cusip": "46432L105",
+                "valid": true,
+                "delisted": false,
+                "exchange": { "country": "C", "code": "TORONTO" },
+                "investmentProduct": {
+                  "tradeable": true,
+                  "type": "F",
+                  "etf": true,
+                  "securityType": "36",
+                  "adRating": null
+                }
+              }
+            ],
+            "cashDetails": [
+              { "currency": "CAD", "cashValue": 18200.40 }
+            ],
+            "investmentTotalMarketValue": 203749.60
+          }
+        ]
+      }
+    }
+  },
+  "investorProfile": {
+    "investorProfile": "INC",
+    "messages": [],
+    "profileType": "PREM",
+    "suitabilityLimit": {
+      "aaEQTargetPct": 40.0,
+      "aaEQVarPct": 10.0,
+      "aaFITargetPct": 55.0,
+      "aaFIVarPct": 10.0,
+      "aaCSTargetPct": 5.0,
+      "aaCSVarPct": 100.0,
+      "riskLimitPct": 15.0,
+      "riskVarPct": 3.0,
+      "concEQLimitPct": 10.0,
+      "concFILimitPct": 25.0
+    },
+    "teamId": "00001"
+  },
+  "suitability": {
+    "accountCashBalanceInCDN": 60351.20,
+    "availableCashCDN": 60351.20,
+    "assetAllocationList": [
+      {
+        "assetClass": "EQ",
+        "currentValueAmt": 379209.20,
+        "currentValuePct": 48.22,
+        "status": "O",
+        "targetValueAmt": 314520.00,
+        "targetValuePct": 40.0,
+        "variancePct": 10.0,
+        "subAssetAllocationList": []
+      },
+      {
+        "assetClass": "FI",
+        "currentValueAmt": 407589.60,
+        "currentValuePct": 51.83,
+        "status": "P",
+        "targetValueAmt": 432450.00,
+        "targetValuePct": 55.0,
+        "variancePct": 10.0,
+        "subAssetAllocationList": []
+      },
+      {
+        "assetClass": "CS",
+        "currentValueAmt": 60351.20,
+        "currentValuePct": 7.67,
+        "status": "P",
+        "targetValueAmt": 39300.00,
+        "targetValuePct": 5.0,
+        "variancePct": 100.0,
+        "subAssetAllocationList": [
+          { "assetClass": "CS", "currentValueAmt": 60351.20, "currentValuePct": 7.67, "subAssetClass": "CA" }
+        ]
+      }
+    ],
+    "buyRecomm": [],
+    "sellRecomm": [
+      {
+        "accountFund": "C",
+        "assetClass": "EQ",
+        "buyOrSell": "S",
+        "canadianPrice": 45.00,
+        "country": "C",
+        "currencyFormat": "cad",
+        "symbol": "BCE",
+        "securityDesc": "BCE INC",
+        "sectorDesc": "Communication Services",
+        "securityRating": 42,
+        "holdingInd": "Y",
+        "planQuantity": 800,
+        "recommendedQuantity": 800,
+        "recommendationType": "F",
+        "recommendationReasons": [
+          { "createDate": "2026-02-28T04:40:36.000+00:00", "reasonCode": "PR", "suitabilityType": "RTNG" }
+        ],
+        "priceInSecurityFund": 45.00,
+        "avgCostInSecurityFund": 52.10
+      },
+      {
+        "accountFund": "C",
+        "assetClass": "EQ",
+        "buyOrSell": "S",
+        "canadianPrice": 7.00,
+        "country": "C",
+        "currencyFormat": "cad",
+        "symbol": "BNS",
+        "securityDesc": "BANK OF NOVA SCOTIA",
+        "sectorDesc": "Financials",
+        "securityRating": 55,
+        "holdingInd": "Y",
+        "planQuantity": 100,
+        "recommendedQuantity": 100,
+        "recommendationType": "F",
+        "recommendationReasons": [
+          { "createDate": "2026-02-28T04:40:36.000+00:00", "reasonCode": "AA", "suitabilityType": "AAST" }
+        ],
+        "priceInSecurityFund": 7.00,
+        "avgCostInSecurityFund": 62.40
+      }
+    ],
+    "concentrationDetailList": [
+      { "curConcAcctPct": 22.14, "curConcValueAmt": 157395.00, "optConcStat": "O", "optGroupCode": "30", "sectorInd": "Y" },
+      { "curConcAcctPct": 15.31, "curConcValueAmt": 108600.00, "optConcStat": "O", "optGroupCode": "40", "sectorInd": "Y" }
+    ],
+    "emptyHoldings": false,
+    "messages": []
+  },
+  "buyRecommendationsEQ": {
+    "buyRecommendations": [
+      {
+        "sentiment": "POSITIVE",
+        "assetClass": "EQ",
+        "buyOrSell": "B",
+        "canadianPrice": 65.21,
+        "country": "C",
+        "currencyFormat": "cad",
+        "cusip": "349553107",
+        "dividendYield": 3.82,
+        "etfIndicator": "N",
+        "gicsCode": "55",
+        "mktCapital": "LCAP",
+        "symbol": "FTS",
+        "securityDesc": "FORTIS INC",
+        "sectorDesc": "Utilities",
+        "securityRating": 72,
+        "securityType": "21",
+        "recommendationDate": "2026-02-28T05:00:00.000+00:00",
+        "recommendedDate": "2026-02-28",
+        "tradeAsCode": "EQ",
+        "avgTenDayVolume": 1820400,
+        "sntmRatingNumber": 6.44
+      },
+      {
+        "sentiment": "NEUTRAL",
+        "assetClass": "EQ",
+        "buyOrSell": "B",
+        "canadianPrice": 52.80,
+        "country": "C",
+        "currencyFormat": "cad",
+        "cusip": "45823T106",
+        "dividendYield": 5.12,
+        "etfIndicator": "N",
+        "gicsCode": "60",
+        "mktCapital": "LCAP",
+        "symbol": "PPL",
+        "securityDesc": "PEMBINA PIPELINE CORP",
+        "sectorDesc": "Energy",
+        "securityRating": 78,
+        "securityType": "21",
+        "recommendationDate": "2026-02-28T05:00:00.000+00:00",
+        "recommendedDate": "2026-02-28",
+        "tradeAsCode": "EQ",
+        "avgTenDayVolume": 2350100,
+        "sntmRatingNumber": 5.88
+      },
+      {
+        "sentiment": "POSITIVE",
+        "assetClass": "EQ",
+        "buyOrSell": "B",
+        "canadianPrice": 22.45,
+        "country": "C",
+        "currencyFormat": "cad",
+        "cusip": "88157K101",
+        "dividendYield": 6.75,
+        "etfIndicator": "N",
+        "gicsCode": "40",
+        "mktCapital": "LCAP",
+        "symbol": "T",
+        "securityDesc": "TELUS CORP",
+        "sectorDesc": "Communication Services",
+        "securityRating": 69,
+        "securityType": "21",
+        "recommendationDate": "2026-02-28T05:00:00.000+00:00",
+        "recommendedDate": "2026-02-28",
+        "tradeAsCode": "EQ",
+        "avgTenDayVolume": 4500300,
+        "sntmRatingNumber": 4.92
+      }
+    ]
+  },
+  "buyRecommendationsFI": {
+    "buyRecommendations": [
+      {
+        "sentiment": "POSITIVE",
+        "assetClass": "FI",
+        "buyOrSell": "B",
+        "canadianPrice": 19.40,
+        "country": "C",
+        "currencyFormat": "cad",
+        "cusip": "05578B208",
+        "dividendYield": 3.12,
+        "etfIndicator": "Y",
+        "fundType": "fixedIncome",
+        "mktCapital": "CACA005000",
+        "symbol": "ZAG",
+        "securityDesc": "BMO AGGREGATE BOND INDEX ETF",
+        "sectorDesc": "Canadian Aggregate Bond",
+        "securityRating": 95,
+        "securityType": "36",
+        "recommendationDate": "2026-02-28T05:00:00.000+00:00",
+        "recommendedDate": "2026-02-28",
+        "tradeAsCode": "EQ",
+        "merRatio": 0.09,
+        "totalYieldSemiAnnual": 0.09
+      },
+      {
+        "sentiment": "POSITIVE",
+        "assetClass": "FI",
+        "buyOrSell": "B",
+        "canadianPrice": 50.25,
+        "country": "C",
+        "currencyFormat": "cad",
+        "cusip": "46434T108",
+        "dividendYield": 4.25,
+        "etfIndicator": "Y",
+        "fundType": "fixedIncome",
+        "mktCapital": "CACA002500",
+        "symbol": "XHY",
+        "securityDesc": "ISHARES US HIGH YIELD BOND INDEX ETF (CAD-HEDGED)",
+        "sectorDesc": "US High Yield Bond",
+        "securityRating": 88,
+        "securityType": "36",
+        "recommendationDate": "2026-02-28T05:00:00.000+00:00",
+        "recommendedDate": "2026-02-28",
+        "tradeAsCode": "EQ",
+        "merRatio": 0.64,
+        "totalYieldSemiAnnual": 0.64
+      },
+      {
+        "sentiment": "NEUTRAL",
+        "assetClass": "FI",
+        "buyOrSell": "B",
+        "canadianPrice": 19.71,
+        "country": "C",
+        "currencyFormat": "cad",
+        "cusip": "D036510",
+        "dividendYield": 2.99,
+        "etfIndicator": "Y",
+        "fundType": "fixedIncome",
+        "mktCapital": "CACA000025",
+        "symbol": "DXV",
+        "securityDesc": "DYNAMIC ACTIVE ULTRA SHORT TERM BOND ETF",
+        "sectorDesc": "Canadian Short Term Fixed Income",
+        "securityRating": 99,
+        "securityType": "21",
+        "recommendationDate": "2026-02-28T05:00:00.000+00:00",
+        "recommendedDate": "2026-02-28",
+        "tradeAsCode": "EQ",
+        "merRatio": 0.34,
+        "totalYieldSemiAnnual": 0.34
+      }
+    ]
+  },
+  "nudgeOffers": {
+    "sowOffer": {},
+    "nudgeOffer": [
+      {
+        "clientId": "kP4rSt7uVwXyZa2bCd5eFg==",
+        "modelID": "AD-2026-02-20",
+        "offerID": "EQUITY_OVERWEIGHT_REBALANCE",
+        "startDate": "2026-02-20",
+        "endDate": "2026-06-30",
+        "status": "Live",
+        "actions": [
+          { "date": "2026-02-20", "action": "Created", "placement": "EMR" }
+        ],
+        "insight": {
+          "insightMsgTitle": "Equity Overweight Alert",
+          "insightMsgBody": "Your equity allocation is at 48.2%, above your 40% income-oriented target. With retirement approaching, consider trimming equity positions and adding to your fixed income holdings to reduce portfolio volatility.",
+          "newPct": 40,
+          "timeKey": "quarterly"
+        },
+        "valueProp": {
+          "title": "Protect Your Retirement Income",
+          "body": "Shifting towards your target allocation can help ensure more stable income in retirement and protect against market downturns during your withdrawal years."
+        },
+        "AD": {
+          "title": "Rebalancing Recommended",
+          "body": "Your portfolio has drifted 8% above your equity target. Selling some equity positions and reinvesting in bond ETFs can bring you back in line with your income-focused strategy."
+        },
+        "CTA": {
+          "title": "Review Sell Recommendations",
+          "body": "See which positions to trim and where to reinvest."
+        }
+      },
+      {
+        "clientId": "kP4rSt7uVwXyZa2bCd5eFg==",
+        "modelID": "AD-2026-01-15",
+        "offerID": "LOW_RATED_HOLDING_ALERT",
+        "startDate": "2026-01-15",
+        "endDate": "2026-07-15",
+        "status": "Presented",
+        "actions": [
+          { "date": "2026-01-15", "action": "Created", "placement": "EMR" },
+          { "date": "2026-02-01", "action": "Presented", "placement": "Holding Summary" }
+        ],
+        "insight": {
+          "insightMsgTitle": "Low-Rated Holdings Review",
+          "insightMsgBody": "Two of your holdings (BCE and BNS) have ratings below 60, indicating weakening fundamentals. These have also underperformed their sector averages. Consider reviewing these positions with your advisor.",
+          "newPct": 0,
+          "timeKey": "monthly"
+        },
+        "valueProp": {
+          "title": "Strengthen Your Portfolio",
+          "body": "Replacing low-rated holdings with higher-quality dividend stocks can help maintain your income stream while improving overall portfolio quality."
+        },
+        "AD": {
+          "title": "Holdings Under Review",
+          "body": "Some of your current holdings have received lower ratings from our research team. Review the recommendations to see if adjustments are warranted."
+        },
+        "CTA": {
+          "title": "View Recommendations",
+          "body": "See sell recommendations and alternative investments."
+        }
+      }
+    ]
+  },
+  "advisorTeam": {
+    "TEAMID": "00001",
+    "TYPE": "PREMIUM",
+    "CALL_YOUR_ADVISOR": "1-844-321-3710",
+    "EMAIL": "premium.advisory@bmo.com",
+    "ADVISORS": [
+      {
+        "FIRST_NAME": "Nadia",
+        "LAST_NAME": "Fontaine",
+        "DESCRIPTION": "Nadia is a Certified Financial Planner (CFP) with 15 years of experience in retirement planning and fixed income strategies. She specializes in helping clients transition smoothly into retirement with sustainable income portfolios."
+      }
+    ]
+  }
+}

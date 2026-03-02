@@ -1,0 +1,202 @@
+{
+  "_meta": {
+    "description": "Shared reference data used across all users — market indices, trade idea categories, and account type mappings. These are not user-specific."
+  },
+  "marketIndices": {
+    "marketWatchCategoryIndex": [
+      {
+        "categoryName": "Canadian indices",
+        "marketWatchIndices": [
+          {
+            "indexName": "TSX COMPOSITE INDEX",
+            "symbol": "SPTSEC",
+            "id": "IN_SPTSEC_C",
+            "marketPrice": 25180.42,
+            "change": 127.35,
+            "percentageChange": 0.51,
+            "currencyIndicator": "CAD",
+            "name": "S&P/TSX Composite Index"
+          },
+          {
+            "indexName": "S&P/TSX 60 INDEX",
+            "symbol": "SPTS",
+            "id": "IN_SPTS_C",
+            "marketPrice": 1532.18,
+            "change": 8.45,
+            "percentageChange": 0.55,
+            "currencyIndicator": "CAD",
+            "name": "S&P/TSX 60 Index"
+          },
+          {
+            "indexName": "S&P/TSX VENTURE COMPOSITE INDEX",
+            "symbol": "SPCDNX",
+            "id": "IN_SPCDNX_C",
+            "marketPrice": 648.92,
+            "change": -3.21,
+            "percentageChange": -0.49,
+            "currencyIndicator": "CAD",
+            "name": "S&P/TSX Venture Composite"
+          }
+        ]
+      },
+      {
+        "categoryName": "U.S. indices",
+        "marketWatchIndices": [
+          {
+            "indexName": "DOW JONES INDUSTRIAL AVERAGE",
+            "symbol": "DJIN",
+            "id": "IN_DJIN_U",
+            "marketPrice": 44225.80,
+            "change": 182.50,
+            "percentageChange": 0.41,
+            "currencyIndicator": "USD",
+            "name": "Dow Jones Industrial Average"
+          },
+          {
+            "indexName": "S&P 500 INDEX",
+            "symbol": "SPX",
+            "id": "IN_SPX_U",
+            "marketPrice": 6012.35,
+            "change": 28.90,
+            "percentageChange": 0.48,
+            "currencyIndicator": "USD",
+            "name": "S&P 500 Index"
+          },
+          {
+            "indexName": "NASDAQ COMPOSITE",
+            "symbol": "COMP",
+            "id": "IN_COMP_U",
+            "marketPrice": 19450.12,
+            "change": -42.80,
+            "percentageChange": -0.22,
+            "currencyIndicator": "USD",
+            "name": "NASDAQ Composite"
+          }
+        ]
+      },
+      {
+        "categoryName": "Commodities & FX",
+        "marketWatchIndices": [
+          {
+            "indexName": "CAD/USD",
+            "symbol": "XDC",
+            "id": "IN_XDC_U",
+            "marketPrice": 0.7224,
+            "change": -0.0012,
+            "percentageChange": -0.17,
+            "currencyIndicator": "USD",
+            "name": "Canadian Dollar / US Dollar"
+          },
+          {
+            "indexName": "GOLD FUTURE",
+            "symbol": "GC",
+            "id": "IN_GC_U",
+            "marketPrice": 2945.30,
+            "change": 18.40,
+            "percentageChange": 0.63,
+            "currencyIndicator": "USD",
+            "name": "Gold Future"
+          },
+          {
+            "indexName": "OIL FUTURE",
+            "symbol": "WTI",
+            "id": "IN_WTI_U",
+            "marketPrice": 72.85,
+            "change": -0.92,
+            "percentageChange": -1.25,
+            "currencyIndicator": "USD",
+            "name": "WTI Crude Oil Future"
+          }
+        ]
+      }
+    ]
+  },
+  "tradeIdeaCategories": {
+    "tradeIdeaCategories": [
+      {
+        "tradeIdeaCategoryId": "tiCatId01",
+        "tradeIdeaCategoryName": "General",
+        "tradeIdeas": [
+          { "tradeIdeaCode": "idea4", "tradeIdeaName": "Overall Grade" },
+          { "tradeIdeaCode": "idea29", "tradeIdeaName": "Growth Stocks" },
+          { "tradeIdeaCode": "idea28", "tradeIdeaName": "Value Stocks" },
+          { "tradeIdeaCode": "idea6", "tradeIdeaName": "Large Caps" },
+          { "tradeIdeaCode": "idea7", "tradeIdeaName": "Mid Caps" },
+          { "tradeIdeaCode": "idea8", "tradeIdeaName": "Small Caps" }
+        ]
+      },
+      {
+        "tradeIdeaCategoryId": "tiCatId02",
+        "tradeIdeaCategoryName": "Fundamental",
+        "tradeIdeas": [
+          { "tradeIdeaCode": "idea13", "tradeIdeaName": "Improving Fundamentals" },
+          { "tradeIdeaCode": "idea14", "tradeIdeaName": "Declining Fundamentals" },
+          { "tradeIdeaCode": "idea20", "tradeIdeaName": "Stellar Balance Sheets" },
+          { "tradeIdeaCode": "idea16", "tradeIdeaName": "Market Leaders" },
+          { "tradeIdeaCode": "idea15", "tradeIdeaName": "Cash Kings" },
+          { "tradeIdeaCode": "idea17", "tradeIdeaName": "Recent Upgrades" },
+          { "tradeIdeaCode": "idea18", "tradeIdeaName": "Recent Downgrades" }
+        ]
+      },
+      {
+        "tradeIdeaCategoryId": "tiCatId03",
+        "tradeIdeaCategoryName": "Income",
+        "tradeIdeas": [
+          { "tradeIdeaCode": "idea31", "tradeIdeaName": "Income Stocks" },
+          { "tradeIdeaCode": "idea10", "tradeIdeaName": "Increasing Yield" },
+          { "tradeIdeaCode": "idea11", "tradeIdeaName": "Increasing Dividends" },
+          { "tradeIdeaCode": "idea12", "tradeIdeaName": "New Dividend Candidates" }
+        ]
+      },
+      {
+        "tradeIdeaCategoryId": "tiCatId04",
+        "tradeIdeaCategoryName": "Sentiment",
+        "tradeIdeas": [
+          { "tradeIdeaCode": "idea21", "tradeIdeaName": "Improving Sentiment" },
+          { "tradeIdeaCode": "idea22", "tradeIdeaName": "Declining Sentiment" },
+          { "tradeIdeaCode": "idea23", "tradeIdeaName": "52 Week Highs" },
+          { "tradeIdeaCode": "idea24", "tradeIdeaName": "52 Week Lows" }
+        ]
+      }
+    ]
+  },
+  "accountTypes": [
+    { "code": "INDIVIDUAL", "label": "Individual (Non-registered)" },
+    { "code": "JOINT", "label": "Joint Account" },
+    { "code": "RRSP", "label": "Registered Retirement Savings Plan" },
+    { "code": "TFSA", "label": "Tax-Free Savings Account" },
+    { "code": "RIF", "label": "Retirement Income Fund" },
+    { "code": "RESP", "label": "Registered Education Savings Plan" },
+    { "code": "CORPORATE", "label": "Corporate Account" },
+    { "code": "FHSA", "label": "First Home Savings Account" },
+    { "code": "PERSONAL_HOLDING_COMPANY", "label": "Personal Holding Company" }
+  ],
+  "investorProfiles": [
+    { "code": "AGG", "label": "Aggressive Growth", "eqTarget": 95, "fiTarget": 5, "description": "Focused on maximum capital appreciation, accepting higher volatility" },
+    { "code": "GRW", "label": "Growth", "eqTarget": 80, "fiTarget": 20, "description": "Prioritizes capital growth with moderate fixed income allocation" },
+    { "code": "BAL", "label": "Balanced", "eqTarget": 60, "fiTarget": 35, "description": "Seeks a balance between growth and income with moderate risk" },
+    { "code": "INC", "label": "Income", "eqTarget": 40, "fiTarget": 55, "description": "Prioritizes steady income with capital preservation" },
+    { "code": "CON", "label": "Conservative", "eqTarget": 20, "fiTarget": 70, "description": "Focused on capital preservation with minimal equity exposure" }
+  ],
+  "assetClasses": [
+    { "code": "EQ", "label": "Equities", "description": "Stocks and equity ETFs" },
+    { "code": "FI", "label": "Fixed Income", "description": "Bonds, bond ETFs, and GICs" },
+    { "code": "CS", "label": "Cash & Equivalents", "description": "Cash balances and money market instruments" }
+  ],
+  "suitabilityStatuses": [
+    { "code": "P", "label": "Pass", "description": "Within target range" },
+    { "code": "U", "label": "Under", "description": "Below target range" },
+    { "code": "O", "label": "Over", "description": "Above target range" }
+  ],
+  "sentimentSignals": [
+    { "code": "POSITIVE", "label": "Positive", "description": "Improving outlook based on analyst sentiment" },
+    { "code": "NEUTRAL", "label": "Neutral", "description": "Stable outlook with no strong directional signal" },
+    { "code": "NEGATIVE", "label": "Negative", "description": "Deteriorating outlook based on analyst sentiment" }
+  ],
+  "recommendationReasonCodes": [
+    { "code": "PR", "type": "RTNG", "label": "Poor Rating", "description": "Security has a low MarketGrader rating" },
+    { "code": "AA", "type": "AAST", "label": "Asset Allocation", "description": "Selling helps bring asset allocation closer to target" },
+    { "code": "CO", "type": "CONC", "label": "Concentration", "description": "Security or sector concentration exceeds limits" },
+    { "code": "RT", "type": "RISK", "label": "Risk Tolerance", "description": "Holding exceeds the account's risk tolerance threshold" }
+  ]
+}
