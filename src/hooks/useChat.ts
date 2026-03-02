@@ -1,10 +1,11 @@
 import { useState, useCallback, useRef } from 'react';
-import type { Account, ChatMessage, LLMProvider } from '../types';
+import type { Account, ChatMessage, LLMContext, LLMProvider } from '../types';
 
-export function useChat(llmProvider: LLMProvider) {
+export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
   const idCounter = useRef(0);
 
   const nextId = () => String(++idCounter.current);
@@ -20,35 +21,112 @@ export function useChat(llmProvider: LLMProvider) {
         timestamp: new Date(),
       };
 
+      const assistantMsgId = nextId();
+
       setMessages((prev) => [...prev, userMsg]);
       setIsLoading(true);
 
       try {
         const updatedHistory = [...messages, userMsg];
-        const response = await llmProvider.sendMessage(content.trim(), updatedHistory);
 
-        const assistantMsg: ChatMessage = {
-          id: nextId(),
-          role: 'assistant',
-          content: response,
-          timestamp: new Date(),
-        };
+        // Enrich context with the currently selected account
+        const enrichedContext = context
+          ? { ...context, selectedAccount }
+          : undefined;
 
-        setMessages((prev) => [...prev, assistantMsg]);
+        if (llmProvider.sendMessageStream && enrichedContext) {
+          // ── Streaming path ──
+          // Typing indicator stays visible until the first token arrives,
+          // then switches to the live-updating message bubble.
+          let streamStarted = false;
+
+          await llmProvider.sendMessageStream(
+            content.trim(),
+            updatedHistory,
+            enrichedContext,
+            (token: string) => {
+              if (!streamStarted) {
+                streamStarted = true;
+                setIsStreaming(true);
+                // Create the assistant message with the first token
+                setMessages((prev) => [
+                  ...prev,
+                  {
+                    id: assistantMsgId,
+                    role: 'assistant' as const,
+                    content: token,
+                    timestamp: new Date(),
+                  },
+                ]);
+              } else {
+                setMessages((prev) =>
+                  prev.map((msg) =>
+                    msg.id === assistantMsgId
+                      ? { ...msg, content: msg.content + token }
+                      : msg,
+                  ),
+                );
+              }
+            },
+          );
+        } else {
+          // ── Non-streaming fallback ──
+          const response = await llmProvider.sendMessage(
+            content.trim(),
+            updatedHistory,
+            enrichedContext,
+          );
+
+          const assistantMsg: ChatMessage = {
+            id: assistantMsgId,
+            role: 'assistant',
+            content: response,
+            timestamp: new Date(),
+          };
+          setMessages((prev) => [...prev, assistantMsg]);
+        }
       } catch (error) {
-        const errorMsg: ChatMessage = {
-          id: nextId(),
-          role: 'assistant',
-          content: 'Sorry, something went wrong. Please try again.',
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, errorMsg]);
+        const errorContent =
+          error instanceof TypeError
+            ? "Could not connect to Ollama. Make sure it's running and the URL is correct."
+            : error instanceof Error
+              ? error.message
+              : 'Sorry, something went wrong. Please try again.';
+
+        setMessages((prev) => {
+          const existing = prev.find((m) => m.id === assistantMsgId);
+          if (existing && existing.content) {
+            // Streaming was in progress — append error after partial content
+            return prev.map((m) =>
+              m.id === assistantMsgId
+                ? { ...m, content: m.content + '\n\n[Error: ' + errorContent + ']' }
+                : m,
+            );
+          }
+          if (existing) {
+            // Empty streaming placeholder — replace with error
+            return prev.map((m) =>
+              m.id === assistantMsgId ? { ...m, content: errorContent } : m,
+            );
+          }
+          // No placeholder yet — add error message
+          return [
+            ...prev,
+            {
+              id: assistantMsgId,
+              role: 'assistant' as const,
+              content: errorContent,
+              timestamp: new Date(),
+            },
+          ];
+        });
         console.error('LLM error:', error);
       } finally {
         setIsLoading(false);
+        setIsStreaming(false);
       }
     },
-    [messages, isLoading, llmProvider]
+    [messages, isLoading, llmProvider, context, selectedAccount],
   );
 
   const selectAccount = useCallback((account: Account) => {
@@ -74,6 +152,7 @@ export function useChat(llmProvider: LLMProvider) {
     messages,
     selectedAccount,
     isLoading,
+    isStreaming,
     sendMessage,
     selectAccount,
     clearChat,

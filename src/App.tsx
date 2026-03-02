@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import JSZip from 'jszip';
 import { Download } from 'lucide-react';
 import { PhoneContainer } from './components/PhoneContainer/PhoneContainer';
@@ -8,9 +8,11 @@ import { InputBar } from './components/InputBar/InputBar';
 import { PromptsPanel, type PromptValues } from './components/PromptsPanel/PromptsPanel';
 import { DataFilesPanel, type DataFile } from './components/DataFilesPanel/DataFilesPanel';
 import { Button } from './components/ui/button';
+import { Card, CardContent } from './components/ui/card';
 import { useChat } from './hooks/useChat';
-import { createLLMProvider } from './services/llmService';
+import { OllamaProvider, createLLMProvider } from './services/llmService';
 import { MOCK_ACCOUNTS } from './data/mockData';
+import type { LLMContext } from './types';
 import './App.css';
 
 const PROMPT_FILENAMES: Record<string, string> = {
@@ -21,10 +23,48 @@ const PROMPT_FILENAMES: Record<string, string> = {
 };
 
 function App() {
-  const llmProvider = useMemo(() => createLLMProvider(), []);
-  const { messages, selectedAccount, isLoading, sendMessage, selectAccount } = useChat(llmProvider);
+  // ── Ollama connection settings ──
+  const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
+  const [ollamaModel, setOllamaModel] = useState('llama3.1:8b');
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
+
+  // ── Session data from config panels ──
   const [sessionPrompts, setSessionPrompts] = useState<PromptValues>({});
   const [sessionFiles, setSessionFiles] = useState<DataFile[]>([]);
+
+  // ── LLM provider (recreated when connection settings change) ──
+  const llmProvider = useMemo(
+    () => createLLMProvider('ollama', ollamaUrl, ollamaModel),
+    [ollamaUrl, ollamaModel],
+  );
+
+  // ── Build LLM context from prompts + data files ──
+  const llmContext = useMemo<LLMContext>(() => {
+    const systemParts = [
+      sessionPrompts['system-prompt'] || '',
+      sessionPrompts['guardrails-specs'] || '',
+      sessionPrompts['topical-conversation-guidelines'] || '',
+    ].filter(Boolean);
+
+    return {
+      systemPrompt: systemParts.join('\n\n'),
+      dataFiles: sessionFiles
+        .filter((f) => f.content)
+        .map((f) => ({ name: f.name, content: f.content! })),
+    };
+  }, [sessionPrompts, sessionFiles]);
+
+  const { messages, selectedAccount, isLoading, isStreaming, sendMessage, selectAccount } =
+    useChat(llmProvider, llmContext);
+
+  // ── Test Ollama connection (debounced on URL change) ──
+  useEffect(() => {
+    setIsConnected(null);
+    const timer = setTimeout(() => {
+      OllamaProvider.testConnection(ollamaUrl).then(setIsConnected);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [ollamaUrl]);
 
   const handlePromptsChange = useCallback((prompts: PromptValues) => {
     setSessionPrompts(prompts);
@@ -37,14 +77,12 @@ function App() {
   const handleSaveAll = useCallback(async () => {
     const zip = new JSZip();
 
-    // Add prompt files
     const promptsFolder = zip.folder('prompts');
     for (const [key, content] of Object.entries(sessionPrompts)) {
       const filename = PROMPT_FILENAMES[key] || `${key}.md`;
       promptsFolder?.file(filename, content);
     }
 
-    // Add data files
     const dataFolder = zip.folder('data-and-files');
     for (const file of sessionFiles) {
       if (file.content) {
@@ -70,6 +108,53 @@ function App() {
           Save
         </Button>
       </div>
+
+      {/* Ollama connection settings */}
+      <Card>
+        <CardContent className="pt-4 space-y-3">
+          <div className="flex items-center gap-2">
+            {isConnected === null ? (
+              <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
+            ) : isConnected ? (
+              <div className="w-2 h-2 rounded-full bg-green-400" />
+            ) : (
+              <div className="w-2 h-2 rounded-full bg-red-400" />
+            )}
+            <span className="text-xs font-medium">
+              {isConnected === null
+                ? 'Checking connection...'
+                : isConnected
+                  ? 'Connected to Ollama'
+                  : 'Ollama not reachable'}
+            </span>
+          </div>
+          <div>
+            <label className="text-[10px] text-muted-foreground uppercase tracking-wider">
+              Server URL
+            </label>
+            <input
+              type="text"
+              value={ollamaUrl}
+              onChange={(e) => setOllamaUrl(e.target.value)}
+              className="w-full mt-1 px-2 py-1.5 text-xs bg-background border rounded-md"
+              placeholder="http://localhost:11434"
+            />
+          </div>
+          <div>
+            <label className="text-[10px] text-muted-foreground uppercase tracking-wider">
+              Model
+            </label>
+            <input
+              type="text"
+              value={ollamaModel}
+              onChange={(e) => setOllamaModel(e.target.value)}
+              className="w-full mt-1 px-2 py-1.5 text-xs bg-background border rounded-md"
+              placeholder="llama3.1:8b"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
       <PromptsPanel onPromptsChange={handlePromptsChange} />
       <DataFilesPanel onFilesChange={handleFilesChange} />
     </>
@@ -81,7 +166,7 @@ function App() {
       <ChatWell
         messages={messages}
         selectedAccount={selectedAccount}
-        isLoading={isLoading}
+        isLoading={isLoading && !isStreaming}
         accounts={MOCK_ACCOUNTS}
         onSelectAccount={selectAccount}
       />
