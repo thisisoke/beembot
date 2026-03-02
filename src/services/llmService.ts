@@ -73,10 +73,13 @@ export class MockLLMProvider implements LLMProvider {
 // ── Ollama Provider ──────────────────────────────────────────────────
 
 export class OllamaProvider implements LLMProvider {
-  constructor(
-    private baseUrl: string = 'http://localhost:11434',
-    private model: string = 'llama3.1:8b',
-  ) {}
+  baseUrl: string;
+  model: string;
+
+  constructor(baseUrl = 'http://localhost:11434', model = 'llama3.1:8b') {
+    this.baseUrl = baseUrl;
+    this.model = model;
+  }
 
   // Non-streaming fallback
   async sendMessage(
