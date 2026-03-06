@@ -10,7 +10,7 @@ A local AI assistant for financial advisors. Configure a system prompt, load cli
 - The model pulled — run this once in your terminal:
 
 ```
-ollama pull llama3.1:8b
+ollama pull llama3:latest
 ```
 
 (~5GB download, only needed once)
