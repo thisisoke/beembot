@@ -2,6 +2,15 @@ import type { ChatMessage, LLMContext, LLMProvider } from '../types';
 
 // ── Helpers ──────────────────────────────────────────────────────────
 
+/**
+ * Strip documentation annotations from prompt markdown before sending to the LLM.
+ * Removes blockquote paragraphs that begin with "> **Rationale:" or "> **How to use"
+ * while preserving sample-response blockquotes and the compliance disclaimer.
+ */
+function stripPromptAnnotations(text: string): string {
+  return text.replace(/^> \*\*(Rationale|How to use this document):.*(?:\n> .*)*$/gm, '');
+}
+
 /** Build the Ollama-format messages array from chat history + context. */
 function buildOllamaMessages(
   userMessage: string,
@@ -11,7 +20,7 @@ function buildOllamaMessages(
   const messages: { role: string; content: string }[] = [];
 
   if (context) {
-    let systemContent = context.systemPrompt || '';
+    let systemContent = stripPromptAnnotations(context.systemPrompt || '');
 
     // Append reference data so the model can ground responses
     const filesWithContent = context.dataFiles.filter((f) => f.content);
@@ -42,6 +51,16 @@ function buildOllamaMessages(
   }
 
   messages.push({ role: 'user', content: userMessage });
+
+  console.debug('[BeemBot] buildOllamaMessages:', {
+    systemPromptLength: messages[0]?.role === 'system' ? messages[0].content.length : 0,
+    systemPromptPreview:
+      messages[0]?.role === 'system'
+        ? messages[0].content.slice(0, 200) + '...'
+        : '(none)',
+    totalMessages: messages.length,
+  });
+
   return messages;
 }
 
@@ -76,7 +95,7 @@ export class OllamaProvider implements LLMProvider {
   baseUrl: string;
   model: string;
 
-  constructor(baseUrl = 'http://localhost:11434', model = 'llama3.1:8b') {
+  constructor(baseUrl = 'http://localhost:11434', model = 'llama3:latest') {
     this.baseUrl = baseUrl;
     this.model = model;
   }

@@ -8,6 +8,12 @@ export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
   const [isStreaming, setIsStreaming] = useState(false);
   const idCounter = useRef(0);
 
+  // Keep a ref to the latest context so the sendMessage callback always reads
+  // the current value, even if the useCallback closure hasn't been recreated yet
+  // (e.g. prompts load asynchronously after mount).
+  const contextRef = useRef(context);
+  contextRef.current = context;
+
   const nextId = () => String(++idCounter.current);
 
   const sendMessage = useCallback(
@@ -29,9 +35,11 @@ export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
       try {
         const updatedHistory = [...messages, userMsg];
 
-        // Enrich context with the currently selected account
-        const enrichedContext = context
-          ? { ...context, selectedAccount }
+        // Enrich context with the currently selected account — read from the ref
+        // to guarantee we always have the latest context (avoids stale closure).
+        const currentContext = contextRef.current;
+        const enrichedContext = currentContext
+          ? { ...currentContext, selectedAccount }
           : undefined;
 
         if (llmProvider.sendMessageStream && enrichedContext) {
@@ -126,7 +134,7 @@ export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
         setIsStreaming(false);
       }
     },
-    [messages, isLoading, llmProvider, context, selectedAccount],
+    [messages, isLoading, llmProvider, selectedAccount],
   );
 
   const selectAccount = useCallback((account: Account) => {
