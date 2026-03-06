@@ -128,29 +128,31 @@ function App() {
                   : 'Ollama not reachable'}
             </span>
           </div>
-          <div>
-            <label className="text-[10px] text-muted-foreground uppercase tracking-wider">
-              Server URL
-            </label>
-            <input
-              type="text"
-              value={ollamaUrl}
-              onChange={(e) => setOllamaUrl(e.target.value)}
-              className="w-full mt-1 px-2 py-1.5 text-xs bg-background border rounded-md"
-              placeholder="http://localhost:11434"
-            />
-          </div>
-          <div>
-            <label className="text-[10px] text-muted-foreground uppercase tracking-wider">
-              Model
-            </label>
-            <input
-              type="text"
-              value={ollamaModel}
-              onChange={(e) => setOllamaModel(e.target.value)}
-              className="w-full mt-1 px-2 py-1.5 text-xs bg-background border rounded-md"
-              placeholder="llama3.1:8b"
-            />
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                Model
+              </label>
+              <input
+                type="text"
+                value={ollamaModel}
+                onChange={(e) => setOllamaModel(e.target.value)}
+                className="w-full mt-1 px-2 py-1.5 text-xs bg-background border rounded-md"
+                placeholder="llama3.1:8b"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                Server URL
+              </label>
+              <input
+                type="text"
+                value={ollamaUrl}
+                onChange={(e) => setOllamaUrl(e.target.value)}
+                className="w-full mt-1 px-2 py-1.5 text-xs bg-background border rounded-md"
+                placeholder="http://localhost:11434"
+              />
+            </div>
           </div>
         </CardContent>
       </Card>
