@@ -110,7 +110,12 @@ export class OllamaProvider implements LLMProvider {
     const res = await fetch(`${this.baseUrl}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: this.model, messages, stream: false }),
+      body: JSON.stringify({
+        model: this.model,
+        messages,
+        stream: false,
+        options: { num_ctx: 32768 },
+      }),
     });
 
     if (!res.ok) {
@@ -133,7 +138,12 @@ export class OllamaProvider implements LLMProvider {
     const res = await fetch(`${this.baseUrl}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: this.model, messages, stream: true }),
+      body: JSON.stringify({
+        model: this.model,
+        messages,
+        stream: true,
+        options: { num_ctx: 32768 },
+      }),
     });
 
     if (!res.ok) {
