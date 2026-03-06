@@ -25,7 +25,7 @@ const PROMPT_FILENAMES: Record<string, string> = {
 function App() {
   // ── Ollama connection settings ──
   const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
-  const [ollamaModel, setOllamaModel] = useState('llama3.1:8b');
+  const [ollamaModel, setOllamaModel] = useState('llama3:latest');
   const [isConnected, setIsConnected] = useState<boolean | null>(null);
 
   // ── Session data from config panels ──
@@ -44,6 +44,7 @@ function App() {
       sessionPrompts['system-prompt'] || '',
       sessionPrompts['guardrails-specs'] || '',
       sessionPrompts['topical-conversation-guidelines'] || '',
+      sessionPrompts['edge-cases'] || '',
     ].filter(Boolean);
 
     return {
