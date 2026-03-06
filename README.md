@@ -40,7 +40,7 @@ chmod +x ~/Downloads/BeemBot-Prototype-Folder/setup.sh
 
 The script will:
 - Install Homebrew (Mac package manager) if needed
-- Install Ollama (the local LLM runner) if needed
+- Install the Ollama macOS app (the local LLM runner) if needed
 - Import the Llama model from the included `.gguf` file
 - Start the AI server
 - Open BeemBot in your browser automatically
