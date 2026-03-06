@@ -1,93 +1,104 @@
 # BeemBot
 
-A local AI chat interface for configuring and testing financial assistant behaviour. Includes system prompt management, data file uploads, multi-account support, and configuration export.
-
-> **No installation required to run.** Just download and open a file.
+A local AI assistant for financial advisors. Configure a system prompt, load client data, and chat with a locally running LLM — nothing leaves your machine.
 
 ---
 
-## Running the App (No Setup Required)
+## What you need before starting
 
-### Step 1 — Download the repo
+- **Ollama** installed — download from [https://ollama.com/download](https://ollama.com/download)
+- The model pulled — run this once in your terminal:
 
-Click the green **Code** button on GitHub → **Download ZIP**, then unzip it.
-
-Or if you have Git:
-```bash
-git clone https://github.com/thisisoke/beembot.git
-cd beembot
 ```
-
-### Step 2 — Open the app
-
-Navigate into the `dist/` folder and open `index.html` in your browser.
-
-That's it. No Node.js, no npm, no terminal needed.
-
----
-
-## Connecting to a Local LLM (Ollama)
-
-BeemBot talks to a locally running LLM via Ollama. You will need to set this up once.
-
-### Install Ollama
-
-Download and install from [https://ollama.com/download](https://ollama.com/download).
-
-### Pull the model
-
-Open your terminal and run:
-```bash
 ollama pull llama3.1:8b
 ```
 
-This downloads the model (~5GB). Only needs to be done once.
+(~5GB download, only needed once)
 
-### Start Ollama
+---
 
-```bash
+## Running the app
+
+### Step 1 — Download this repo
+
+Click the green **Code** button → **Download ZIP**, then unzip it anywhere on your computer.
+
+### Step 2 — Start Ollama
+
+Open a terminal and run:
+
+```
 ollama serve
 ```
 
-Ollama runs at `http://localhost:11434` by default.
+Leave this terminal open. Ollama is now running at `http://localhost:11434`.
 
-### Connect BeemBot
+### Step 3 — Start the app
 
-In the app's Configuration panel, set the Server URL to:
+Open a **second terminal**, navigate into the `dist/` folder inside the repo you downloaded, and run:
 
 ```
-http://localhost:11434
+cd path/to/beembot/dist
+python3 -m http.server 8080
 ```
 
-The status indicator will turn green when the connection is live.
+Then open your browser and go to:
+
+```
+http://localhost:8080
+```
+
+That's it. BeemBot is running.
+
+---
+
+## Inside the app
+
+- **Server URL** — should already be set to `http://localhost:11434`. If the status says "Ollama not reachable", make sure `ollama serve` is still running.
+- **Model** — set to `llama3.1:8b` by default. If your machine is slow or low on RAM, try `llama3.2:3b` instead (run `ollama pull llama3.2:3b` first).
+- **System Prompt** — paste your assistant instructions here.
+- **Data & Files** — upload CSV, JSON, or markdown files to give the assistant context about a client or portfolio.
 
 ---
 
 ## Troubleshooting
 
+**Blank page when I open index.html directly**
+Don't double-click the file. Use the `python3 -m http.server 8080` command above instead.
+
 **"Ollama not reachable"**
-Make sure `ollama serve` is running in a terminal. If it started on a different port, update the Server URL field in the app to match.
+Make sure `ollama serve` is running in a separate terminal window. Don't close it.
 
-**The app looks broken or blank**
-Make sure you're opening `dist/index.html`, not `index.html` from the root of the project.
+**Model is very slow**
+`llama3.1:8b` needs ~8GB RAM. Switch to a lighter model:
 
-**Model is slow**
-`llama3.1:8b` requires ~8GB of RAM. If your machine is struggling, try a smaller model:
-```bash
+```
 ollama pull llama3.2:3b
 ```
-Then update the Model field in the Configuration panel to `llama3.2:3b`.
+
+Then change the Model field in the app to `llama3.2:3b`.
+
+**Port 8080 already in use**
+Change the port number: `python3 -m http.server 3000` and visit `http://localhost:3000` instead.
 
 ---
 
-## For Developers
+## For developers
 
-If you want to modify the source code, you'll need Node.js and npm.
+Source code and dev environment lives on the `dev` branch:
 
-```bash
+```
+git checkout dev
 npm install
-npm run dev      # start dev server at localhost:5173
-npm run build    # rebuild the dist/ folder
+npm run dev
 ```
 
-Stack: React 19, TypeScript, Vite, Tailwind CSS v4, Radix UI.
+When you're ready to ship an update:
+
+```
+npm run build
+git checkout main
+cp -r dist/ ../beembot-main/dist/ # copy built files to main
+```
+
+Or use the Claude Code build instructions in the dev branch.
