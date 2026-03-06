@@ -1,0 +1,5 @@
+[
+  { "name": "securities-list.csv", "description": "Canadian securities with analyst ratings" },
+  { "name": "sample-portfolio.json", "description": "Sample client portfolio data" },
+  { "name": "market-overview.md", "description": "Canadian market overview and sector performance" }
+]

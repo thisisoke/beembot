@@ -1,0 +1,26 @@
+{
+  "portfolioId": "PF-2024-001",
+  "accountHolder": "Sam",
+  "accounts": [
+    {
+      "accountId": "TFSA-0052",
+      "type": "TFSA",
+      "balance": 45230.50,
+      "holdings": [
+        { "ticker": "RY.TO", "shares": 50, "avgCost": 142.30, "currentPrice": 168.75 },
+        { "ticker": "SHOP.TO", "shares": 15, "avgCost": 85.20, "currentPrice": 107.50 },
+        { "ticker": "ENB.TO", "shares": 100, "avgCost": 52.10, "currentPrice": 55.80 }
+      ]
+    },
+    {
+      "accountId": "RRSP-0052",
+      "type": "RRSP",
+      "balance": 78450.00,
+      "holdings": [
+        { "ticker": "TD.TO", "shares": 80, "avgCost": 82.50, "currentPrice": 85.20 },
+        { "ticker": "CNR.TO", "shares": 30, "avgCost": 155.00, "currentPrice": 172.40 },
+        { "ticker": "BMO.TO", "shares": 45, "avgCost": 125.60, "currentPrice": 131.90 }
+      ]
+    }
+  ]
+}
