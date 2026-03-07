@@ -7,6 +7,9 @@
 
 set -e  # Stop on any error
 
+# Make this script executable so future runs can use double-click in Finder
+chmod +x "${BASH_SOURCE[0]}" 2>/dev/null || true
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODEL_FILE="$SCRIPT_DIR/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
 MODEL_NAME="llama3.1-beembot"
@@ -47,7 +50,16 @@ else
   curl -L -o "$OLLAMA_ZIP" "https://github.com/ollama/ollama/releases/download/v0.17.7/Ollama-darwin.zip"
   unzip -o "$OLLAMA_ZIP" -d /tmp
   cp -R /tmp/Ollama.app /Applications/
-  ln -sf /Applications/Ollama.app/Contents/Resources/ollama /usr/local/bin/ollama
+
+  # Symlink the ollama CLI into PATH; use sudo if /usr/local/bin isn't writable
+  if ln -sf /Applications/Ollama.app/Contents/Resources/ollama /usr/local/bin/ollama 2>/dev/null; then
+    true
+  else
+    echo "  Need admin permission to add ollama to PATH..."
+    sudo mkdir -p /usr/local/bin
+    sudo ln -sf /Applications/Ollama.app/Contents/Resources/ollama /usr/local/bin/ollama
+  fi
+
   rm -f "$OLLAMA_ZIP"
   rm -rf /tmp/Ollama.app
   echo "  ✓ Ollama installed"
