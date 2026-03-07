@@ -41,7 +41,15 @@ if command -v ollama &>/dev/null; then
   echo "  ✓ Ollama already installed"
 else
   echo "  Installing Ollama..."
-  brew install ollama
+  # Install the official macOS release (universal binary) instead of Homebrew.
+  # This ensures native Apple Silicon (Metal GPU) support on M-series Macs.
+  OLLAMA_ZIP="/tmp/Ollama.zip"
+  curl -L -o "$OLLAMA_ZIP" "https://github.com/ollama/ollama/releases/download/v0.17.7/Ollama-darwin.zip"
+  unzip -o "$OLLAMA_ZIP" -d /tmp
+  cp -R /tmp/Ollama.app /Applications/
+  ln -sf /Applications/Ollama.app/Contents/Resources/ollama /usr/local/bin/ollama
+  rm -f "$OLLAMA_ZIP"
+  rm -rf /tmp/Ollama.app
   echo "  ✓ Ollama installed"
 fi
 
