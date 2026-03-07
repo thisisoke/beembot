@@ -18,25 +18,11 @@ BeemBot-Prototype-Folder/
 
 ## First time setup (do this once)
 
-### Step 1 — Allow the script to run
+In Finder, **right-click** `setup.sh` → **Open With** → **Terminal**.
 
-Open **Terminal** (press `Cmd + Space`, type "Terminal", hit Enter).
+> If Terminal isn't listed, choose **Other…**, then find Terminal in Applications → Utilities.
 
-Drag the `setup.sh` file into the Terminal window — it will paste the file path automatically. Then type a space and press Enter... 
-
-Actually, just run this command instead (copy and paste it):
-
-```bash
-chmod +x ~/Downloads/BeemBot-Prototype-Folder/setup.sh
-```
-
-> If your folder is somewhere other than Downloads, adjust the path.
-
-### Step 2 — Run the setup script
-
-```bash
-~/Downloads/BeemBot-Prototype-Folder/setup.sh
-```
+macOS may ask _"Are you sure you want to open it?"_ — click **Open**.
 
 The script will:
 - Install Homebrew (Mac package manager) if needed
@@ -45,20 +31,17 @@ The script will:
 - Start the AI server
 - Open BeemBot in your browser automatically
 
+You may be asked for your Mac login **password** during installation — this is normal.
+
 **The first run takes about 2–3 minutes.** After that it's fast.
 
 ---
 
 ## Every time after that
 
-Just double-click `setup.sh` in Finder.
+Just **double-click** `setup.sh` in Finder.
 
-> If double-clicking doesn't work, right-click → Open With → Terminal.
-
-Or in Terminal:
-```bash
-~/Downloads/BeemBot-Prototype-Folder/setup.sh
-```
+> If double-clicking opens a text editor instead, right-click → Open With → Terminal.
 
 ---
 
@@ -82,10 +65,10 @@ Go back to the Terminal window and press `Ctrl + C`.
 ## Troubleshooting
 
 **"Permission denied" when running setup.sh**
-Run this first, then try again:
-```bash
-chmod +x ~/Downloads/BeemBot-Prototype-Folder/setup.sh
-```
+Right-click the file → Open With → Terminal instead of double-clicking.
+
+**"Permission denied" during Ollama install**
+The script will ask for your Mac login password to complete the install. Type your password (nothing will appear as you type) and press Enter.
 
 **Browser opens but app is blank**
 Wait 5 seconds and refresh. The server may still be starting.
