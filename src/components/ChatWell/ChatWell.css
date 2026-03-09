@@ -105,6 +105,22 @@
   flex-shrink: 0;
 }
 
+/* ── Prompt Updated Badge ── */
+
+.prompt-updated-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #e65100;
+  background: #fff3e0;
+  border: 1px solid #ffcc80;
+  border-radius: 10px;
+  padding: 2px 8px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
 /* ── Typing indicator ── */
 
 .typing-indicator {

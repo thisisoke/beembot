@@ -11,6 +11,33 @@ function stripPromptAnnotations(text: string): string {
   return text.replace(/^> \*\*(Rationale|How to use this document):.*(?:\n> .*)*$/gm, '');
 }
 
+/**
+ * Try to extract the user's name from data file contents.
+ * Looks for common JSON fields like accountHolder, firstName, name, etc.
+ */
+function extractUserName(dataFiles: { name: string; content: string }[]): string | null {
+  for (const file of dataFiles) {
+    try {
+      const parsed = JSON.parse(file.content);
+
+      // Direct top-level fields
+      if (parsed.accountHolder) return parsed.accountHolder;
+      if (parsed._meta?.firstName) return parsed._meta.firstName;
+      if (parsed.userProfile?.firstName) return parsed.userProfile.firstName;
+      if (parsed.firstName) return parsed.firstName;
+      if (parsed.name) return parsed.name;
+
+      // Check nested user/profile objects
+      if (parsed.user?.firstName) return parsed.user.firstName;
+      if (parsed.user?.name) return parsed.user.name;
+      if (parsed.profile?.firstName) return parsed.profile.firstName;
+    } catch {
+      // Not JSON or malformed — skip
+    }
+  }
+  return null;
+}
+
 /** Build the Ollama-format messages array from chat history + context. */
 function buildOllamaMessages(
   userMessage: string,
@@ -30,6 +57,12 @@ function buildOllamaMessages(
       for (const file of filesWithContent) {
         systemContent += `\n### ${file.name}\n\`\`\`\n${file.content}\n\`\`\`\n`;
       }
+    }
+
+    // Extract user name from data files and add to context
+    const userName = extractUserName(filesWithContent);
+    if (userName) {
+      systemContent += `\n\n## User Identity\nThe user's name is **${userName}**. Address them by name when appropriate to personalise the experience.`;
     }
 
     // Add selected-account context
@@ -95,7 +128,7 @@ export class OllamaProvider implements LLMProvider {
   baseUrl: string;
   model: string;
 
-  constructor(baseUrl = 'http://localhost:11434', model = 'llama3:latest') {
+  constructor(baseUrl = 'http://localhost:11434', model = 'llama3.1-beembot') {
     this.baseUrl = baseUrl;
     this.model = model;
   }
