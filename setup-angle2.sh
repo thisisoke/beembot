@@ -26,7 +26,16 @@
 
 set -e  # Stop on any error
 
+# Resolve script directory — works with spaces in path
+
+if [[ -n “${BASH_SOURCE[0]}” && “${BASH_SOURCE[0]}” != “bash” ]]; then
 SCRIPT_DIR=”$(cd “$(dirname “${BASH_SOURCE[0]}”)” && pwd)”
+else
+
+# Fallback: assume script is run from its own folder
+
+SCRIPT_DIR=”$(pwd)”
+fi
 MODEL_FILE=”$SCRIPT_DIR/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf”
 MODEL_NAME=“llama3.1-beembot”
 PORT=8080
