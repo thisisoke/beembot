@@ -1,6 +1,10 @@
 import './Header.css';
 
-export function Header() {
+interface HeaderProps {
+  onRefresh?: () => void;
+}
+
+export function Header({ onRefresh }: HeaderProps) {
   return (
     <header className="header">
       <div className="header-left">
@@ -26,10 +30,12 @@ export function Header() {
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
-        <button className="header-icon-btn" aria-label="Close">
+        <button className="header-icon-btn" aria-label="Refresh chat" onClick={onRefresh} title="Clear chat and refresh with latest prompts">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
+            <path d="M21 2v6h-6" />
+            <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+            <path d="M3 22v-6h6" />
+            <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
           </svg>
         </button>
       </div>

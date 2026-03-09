@@ -9,6 +9,7 @@ interface ChatWellProps {
   isLoading: boolean;
   accounts: Account[];
   onSelectAccount: (account: Account) => void;
+  promptsUpdated?: boolean;
 }
 
 function renderBoldText(text: string) {
@@ -21,7 +22,7 @@ function renderBoldText(text: string) {
   });
 }
 
-export function ChatWell({ messages, selectedAccount, isLoading, accounts, onSelectAccount }: ChatWellProps) {
+export function ChatWell({ messages, selectedAccount, isLoading, accounts, onSelectAccount, promptsUpdated }: ChatWellProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,6 +42,9 @@ export function ChatWell({ messages, selectedAccount, isLoading, accounts, onSel
               </div>
             ) : (
               <div className="message-surface">
+                {promptsUpdated && (
+                  <span className="prompt-updated-badge">Prompt files updated</span>
+                )}
                 {msg.content && (
                   <div className="ai-text">
                     {msg.content.split('\n').map((line, i) => (
