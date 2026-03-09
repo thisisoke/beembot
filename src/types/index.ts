@@ -12,6 +12,8 @@ export interface ChatMessage {
   timestamp: Date;
   /** Rich content like account selection prompts */
   attachment?: MessageAttachment;
+  /** Shown when prompt/data files were updated before this message */
+  promptsUpdatedBadge?: boolean;
 }
 
 export type MessageAttachment =

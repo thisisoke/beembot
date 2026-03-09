@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import type { Account, ChatMessage, LLMContext, LLMProvider } from '../types';
 
-export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
+export function useChat(llmProvider: LLMProvider, context?: LLMContext, promptsUpdated = false) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +13,9 @@ export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
   // (e.g. prompts load asynchronously after mount).
   const contextRef = useRef(context);
   contextRef.current = context;
+
+  const promptsUpdatedRef = useRef(promptsUpdated);
+  promptsUpdatedRef.current = promptsUpdated;
 
   const nextId = () => String(++idCounter.current);
 
@@ -64,6 +67,7 @@ export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
                     role: 'assistant' as const,
                     content: token,
                     timestamp: new Date(),
+                    promptsUpdatedBadge: promptsUpdatedRef.current,
                   },
                 ]);
               } else {
@@ -90,6 +94,7 @@ export function useChat(llmProvider: LLMProvider, context?: LLMContext) {
             role: 'assistant',
             content: response,
             timestamp: new Date(),
+            promptsUpdatedBadge: promptsUpdatedRef.current,
           };
           setMessages((prev) => [...prev, assistantMsg]);
         }

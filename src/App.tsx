@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState, useEffect, useRef } from 'react';
 import JSZip from 'jszip';
 import { Download } from 'lucide-react';
 import { PhoneContainer } from './components/PhoneContainer/PhoneContainer';
@@ -25,12 +25,16 @@ const PROMPT_FILENAMES: Record<string, string> = {
 function App() {
   // ── Ollama connection settings ──
   const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
-  const [ollamaModel, setOllamaModel] = useState('llama3:latest');
+  const [ollamaModel, setOllamaModel] = useState('llama3.1-beembot');
   const [isConnected, setIsConnected] = useState<boolean | null>(null);
 
   // ── Session data from config panels ──
   const [sessionPrompts, setSessionPrompts] = useState<PromptValues>({});
   const [sessionFiles, setSessionFiles] = useState<DataFile[]>([]);
+
+  // ── Track whether prompt/data files changed after initial load ──
+  const [promptsUpdated, setPromptsUpdated] = useState(false);
+  const initialLoadDone = useRef(false);
 
   // ── LLM provider (recreated when connection settings change) ──
   const llmProvider = useMemo(
@@ -55,8 +59,13 @@ function App() {
     };
   }, [sessionPrompts, sessionFiles]);
 
-  const { messages, selectedAccount, isLoading, isStreaming, sendMessage, selectAccount } =
-    useChat(llmProvider, llmContext);
+  const { messages, selectedAccount, isLoading, isStreaming, sendMessage, selectAccount, clearChat } =
+    useChat(llmProvider, llmContext, promptsUpdated);
+
+  const handleRefresh = useCallback(() => {
+    clearChat();
+    setPromptsUpdated(false);
+  }, [clearChat]);
 
   // ── Test Ollama connection (debounced on URL change) ──
   useEffect(() => {
@@ -69,11 +78,26 @@ function App() {
 
   const handlePromptsChange = useCallback((prompts: PromptValues) => {
     setSessionPrompts(prompts);
+    if (initialLoadDone.current) {
+      setPromptsUpdated(true);
+    }
   }, []);
 
   const handleFilesChange = useCallback((files: DataFile[]) => {
     setSessionFiles(files);
+    if (initialLoadDone.current) {
+      setPromptsUpdated(true);
+    }
   }, []);
+
+  // Mark initial load as done after both panels have loaded
+  useEffect(() => {
+    if (Object.keys(sessionPrompts).length > 0 && !initialLoadDone.current) {
+      // Small delay to let both panels finish their initial load
+      const timer = setTimeout(() => { initialLoadDone.current = true; }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [sessionPrompts]);
 
   const handleSaveAll = useCallback(async () => {
     const zip = new JSZip();
@@ -165,7 +189,10 @@ function App() {
 
   return (
     <PhoneContainer leftPanels={leftPanels}>
-      <Header />
+      <Header
+        onRefresh={handleRefresh}
+        toast={promptsUpdated && messages.length > 0 ? 'Prompt files updated — refresh chat for clean testing' : null}
+      />
       <ChatWell
         messages={messages}
         selectedAccount={selectedAccount}

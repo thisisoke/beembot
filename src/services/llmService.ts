@@ -11,6 +11,24 @@ function stripPromptAnnotations(text: string): string {
   return text.replace(/^> \*\*(Rationale|How to use this document):.*(?:\n> .*)*$/gm, '');
 }
 
+/** Try to extract a user name from data file contents (e.g. accountHolder in JSON). */
+function extractUserName(dataFiles: { name: string; content: string }[]): string | null {
+  for (const file of dataFiles) {
+    if (!file.content) continue;
+    try {
+      const parsed = JSON.parse(file.content);
+      if (parsed.accountHolder) return parsed.accountHolder;
+      if (parsed.name) return parsed.name;
+      if (parsed.userName) return parsed.userName;
+    } catch {
+      // Not JSON — try a simple pattern match for name fields
+      const match = file.content.match(/(?:accountHolder|name|userName)\s*[:=]\s*"?([A-Z][a-z]+(?: [A-Z][a-z]+)*)"?/);
+      if (match) return match[1];
+    }
+  }
+  return null;
+}
+
 /** Build the Ollama-format messages array from chat history + context. */
 function buildOllamaMessages(
   userMessage: string,
@@ -30,6 +48,12 @@ function buildOllamaMessages(
       for (const file of filesWithContent) {
         systemContent += `\n### ${file.name}\n\`\`\`\n${file.content}\n\`\`\`\n`;
       }
+    }
+
+    // Extract user name from data files (e.g. accountHolder in portfolio JSON)
+    const userName = extractUserName(context.dataFiles);
+    if (userName) {
+      systemContent += `\n\n## User Identity\nThe user's name is **${userName}**. Address them by name in your responses.`;
     }
 
     // Add selected-account context
@@ -95,7 +119,7 @@ export class OllamaProvider implements LLMProvider {
   baseUrl: string;
   model: string;
 
-  constructor(baseUrl = 'http://localhost:11434', model = 'llama3:latest') {
+  constructor(baseUrl = 'http://localhost:11434', model = 'llama3.1-beembot') {
     this.baseUrl = baseUrl;
     this.model = model;
   }

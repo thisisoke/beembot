@@ -41,6 +41,9 @@ export function ChatWell({ messages, selectedAccount, isLoading, accounts, onSel
               </div>
             ) : (
               <div className="message-surface">
+                {msg.promptsUpdatedBadge && (
+                  <div className="prompts-updated-badge">Prompt files updated</div>
+                )}
                 {msg.content && (
                   <div className="ai-text">
                     {msg.content.split('\n').map((line, i) => (
