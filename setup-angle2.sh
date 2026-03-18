@@ -180,7 +180,7 @@ echo ""
 
 # Open browser after short delay
 
-(sleep 1 && open "http://localhost:$PORT") &
+(sleep 5 && open "http://localhost:$PORT") &
 
 # Start web server from dist folder
 
