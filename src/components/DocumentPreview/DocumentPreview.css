@@ -1,0 +1,219 @@
+/* ── Document Preview Panel ── */
+
+.doc-preview-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #1e1e24;
+  overflow: hidden;
+}
+
+/* ── Tab Bar ── */
+
+.doc-tab-bar {
+  display: flex;
+  align-items: stretch;
+  background: #16161b;
+  border-bottom: 1px solid #2a2a35;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a48 transparent;
+  min-height: 36px;
+}
+
+.doc-tab-bar::-webkit-scrollbar {
+  height: 3px;
+}
+
+.doc-tab-bar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.doc-tab-bar::-webkit-scrollbar-thumb {
+  background: #3a3a48;
+  border-radius: 2px;
+}
+
+.doc-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #8a8a9a;
+  background: transparent;
+  border-right: 1px solid #2a2a35;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.12s, color 0.12s;
+  user-select: none;
+}
+
+.doc-tab:hover {
+  background: #24242e;
+  color: #c0c0d0;
+}
+
+.doc-tab--active {
+  background: #1e1e24;
+  color: #e0e0ec;
+  border-bottom: 2px solid #6c8eef;
+  margin-bottom: -1px;
+}
+
+.doc-tab-label {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-tab-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 3px;
+  transition: opacity 0.12s, background 0.12s;
+}
+
+.doc-tab-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Content Area ── */
+
+.doc-content-area {
+  flex: 1;
+  overflow: auto;
+  padding: 0;
+}
+
+/* ── Editor (for prompts) ── */
+
+.doc-editor {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding: 20px 24px;
+  border: none;
+  outline: none;
+  background: #1e1e24;
+  color: #d4d4dc;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  resize: none;
+  display: block;
+}
+
+.doc-editor::placeholder {
+  color: #5a5a6a;
+}
+
+/* ── Table view (CSV) ── */
+
+.doc-table-wrapper {
+  overflow: auto;
+  padding: 16px;
+  height: 100%;
+}
+
+.doc-table {
+  border-collapse: collapse;
+  font-size: 12px;
+  width: 100%;
+  color: #d4d4dc;
+}
+
+.doc-table th {
+  background: #2a2a35;
+  color: #a0a0b8;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 12px;
+  border: 1px solid #3a3a48;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.doc-table td {
+  padding: 6px 12px;
+  border: 1px solid #2a2a35;
+  white-space: nowrap;
+}
+
+.doc-table tbody tr:hover {
+  background: #24242e;
+}
+
+/* ── JSON view ── */
+
+.doc-json-view {
+  padding: 20px 24px;
+  margin: 0;
+  color: #d4d4dc;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Text view (generic files) ── */
+
+.doc-text-view {
+  padding: 20px 24px;
+  margin: 0;
+  color: #d4d4dc;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Empty state ── */
+
+.doc-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 12px;
+  color: #5a5a6a;
+  padding: 40px;
+}
+
+.doc-empty-icon {
+  opacity: 0.3;
+}
+
+.doc-empty-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #7a7a8a;
+  margin: 0;
+}
+
+.doc-empty-subtitle {
+  font-size: 13px;
+  color: #5a5a6a;
+  margin: 0;
+  text-align: center;
+  max-width: 280px;
+  line-height: 1.5;
+}
