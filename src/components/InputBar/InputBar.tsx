@@ -1,5 +1,4 @@
 import { useState, type FormEvent, type ChangeEvent } from 'react';
-import type { Account } from '../../types';
 import './InputBar.css';
 
 const MAX_CHARS = 1000;
@@ -7,11 +6,9 @@ const MAX_CHARS = 1000;
 interface InputBarProps {
   onSend: (message: string) => void;
   isLoading: boolean;
-  selectedAccount: Account | null;
-  onToggleAccountSelector?: () => void;
 }
 
-export function InputBar({ onSend, isLoading, selectedAccount, onToggleAccountSelector }: InputBarProps) {
+export function InputBar({ onSend, isLoading }: InputBarProps) {
   const [value, setValue] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
@@ -30,18 +27,6 @@ export function InputBar({ onSend, isLoading, selectedAccount, onToggleAccountSe
 
   return (
     <div className="input-bar-wrapper">
-      {/* Account bar */}
-      <button className="account-bar" onClick={onToggleAccountSelector} type="button">
-        <span className="account-bar-label">
-          {selectedAccount
-            ? `${selectedAccount.name} ${selectedAccount.type} ****${selectedAccount.lastFour}`
-            : 'Select Account'}
-        </span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="18 15 12 9 6 15" />
-        </svg>
-      </button>
-
       {/* Text input */}
       <form className="input-bar" onSubmit={handleSubmit}>
         <div className="input-field-wrapper">

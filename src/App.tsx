@@ -43,10 +43,14 @@ function App() {
   const [promptsLoading, setPromptsLoading] = useState(true);
   const [filesLoading, setFilesLoading] = useState(true);
 
-  // ── Track whether prompt/data files have been updated after initial load ──
+  // ── Saved prompts snapshot (what's "committed" in the session) ──
+  const [savedPrompts, setSavedPrompts] = useState<PromptValues>({});
+
+  // ── Track which prompts have unsaved changes ──
+  const [dirtyPrompts, setDirtyPrompts] = useState<Set<string>>(new Set());
+
+  // ── Track whether prompt/data files have been updated after save ──
   const [promptsUpdated, setPromptsUpdated] = useState(false);
-  const promptsInitialised = useRef(false);
-  const filesInitialised = useRef(false);
 
   // ── Navigation panel section toggles ──
   const [promptsExpanded, setPromptsExpanded] = useState(true);
@@ -56,19 +60,23 @@ function App() {
   const [openTabs, setOpenTabs] = useState<DocumentTab[]>([]);
   const [activeTabId, setActiveTabId] = useState<string | null>(null);
 
+  // ── Save toast ──
+  const [saveToastVisible, setSaveToastVisible] = useState(false);
+  const saveToastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
   // ── LLM provider ──
   const llmProvider = useMemo(
     () => createLLMProvider('ollama', ollamaUrl, ollamaModel),
     [ollamaUrl, ollamaModel],
   );
 
-  // ── Build LLM context from prompts + data files ──
+  // ── Build LLM context from saved prompts + data files ──
   const llmContext = useMemo<LLMContext>(() => {
     const systemParts = [
-      sessionPrompts['system-prompt'] || '',
-      sessionPrompts['guardrails-specs'] || '',
-      sessionPrompts['topical-conversation-guidelines'] || '',
-      sessionPrompts['edge-cases'] || '',
+      savedPrompts['system-prompt'] || '',
+      savedPrompts['guardrails-specs'] || '',
+      savedPrompts['topical-conversation-guidelines'] || '',
+      savedPrompts['edge-cases'] || '',
     ].filter(Boolean);
 
     return {
@@ -77,7 +85,7 @@ function App() {
         .filter((f) => f.content)
         .map((f) => ({ name: f.name, content: f.content! })),
     };
-  }, [sessionPrompts, sessionFiles]);
+  }, [savedPrompts, sessionFiles]);
 
   const { messages, selectedAccount, isLoading, isStreaming, sendMessage, selectAccount, clearChat } =
     useChat(llmProvider, llmContext);
@@ -113,6 +121,7 @@ function App() {
         }
       }
       setSessionPrompts(loaded);
+      setSavedPrompts(loaded);
       setPromptsLoading(false);
     }
     loadPrompts();
@@ -150,15 +159,40 @@ function App() {
 
   // ── Handle prompt changes (from document editor) ──
   const handlePromptChange = useCallback((key: string, value: string) => {
-    setSessionPrompts((prev) => {
-      const next = { ...prev, [key]: value };
-      if (promptsInitialised.current) {
-        setPromptsUpdated(true);
-      } else {
-        promptsInitialised.current = true;
-      }
+    setSessionPrompts((prev) => ({ ...prev, [key]: value }));
+    setDirtyPrompts((prev) => {
+      const next = new Set(prev);
+      next.add(key);
       return next;
     });
+  }, []);
+
+  // ── Save a specific prompt ──
+  const handleSavePrompt = useCallback((key: string) => {
+    setSavedPrompts((prev) => {
+      const next = { ...prev };
+      // Get the latest session value
+      setSessionPrompts((current) => {
+        next[key] = current[key];
+        return current;
+      });
+      return next;
+    });
+    // A more reliable approach: read sessionPrompts directly
+    setSessionPrompts((current) => {
+      setSavedPrompts((prev) => ({ ...prev, [key]: current[key] }));
+      return current;
+    });
+    setDirtyPrompts((prev) => {
+      const next = new Set(prev);
+      next.delete(key);
+      return next;
+    });
+    setPromptsUpdated(true);
+    // Show save toast
+    setSaveToastVisible(true);
+    if (saveToastTimer.current) clearTimeout(saveToastTimer.current);
+    saveToastTimer.current = setTimeout(() => setSaveToastVisible(false), 3000);
   }, []);
 
   // ── Handle file upload from navigation panel ──
@@ -175,16 +209,9 @@ function App() {
             isUploaded: true,
             content,
           };
-          const next =
-            exists >= 0
-              ? prev.map((f, i) => (i === exists ? newFile : f))
-              : [...prev, newFile];
-          if (filesInitialised.current) {
-            setPromptsUpdated(true);
-          } else {
-            filesInitialised.current = true;
-          }
-          return next;
+          return exists >= 0
+            ? prev.map((f, i) => (i === exists ? newFile : f))
+            : [...prev, newFile];
         });
       };
       reader.readAsText(file);
@@ -209,28 +236,61 @@ function App() {
     }
   }, []);
 
-  // ── Save all as ZIP ──
-  const handleSaveAll = useCallback(async () => {
+  // ── Download all prompts as ZIP ──
+  const handleDownloadAllPrompts = useCallback(async () => {
     const zip = new JSZip();
-    const promptsFolder = zip.folder('prompts');
     for (const [key, content] of Object.entries(sessionPrompts)) {
       const filename = PROMPT_FILENAMES[key] || `${key}.md`;
-      promptsFolder?.file(filename, content);
+      zip.file(filename, content);
     }
-    const dataFolder = zip.folder('data-and-files');
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'beembot-prompts.zip';
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [sessionPrompts]);
+
+  // ── Download all sources as ZIP ──
+  const handleDownloadAllSources = useCallback(async () => {
+    const zip = new JSZip();
     for (const file of sessionFiles) {
       if (file.content) {
-        dataFolder?.file(file.name, file.content);
+        zip.file(file.name, file.content);
       }
     }
     const blob = await zip.generateAsync({ type: 'blob' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'beembot-config.zip';
+    a.download = 'beembot-sources.zip';
     a.click();
     URL.revokeObjectURL(url);
-  }, [sessionPrompts, sessionFiles]);
+  }, [sessionFiles]);
+
+  // ── Share chat transcript ──
+  const handleShareTranscript = useCallback(() => {
+    if (messages.length === 0) return;
+    const lines = messages.map((msg) => {
+      const role = msg.role === 'user' ? 'You' : 'BeemBot';
+      return `${role}: ${msg.content}`;
+    });
+    const transcript = lines.join('\n\n');
+
+    // Try native share, fall back to clipboard
+    if (navigator.share) {
+      navigator.share({ title: 'BeemBot Chat Transcript', text: transcript }).catch(() => {
+        navigator.clipboard.writeText(transcript);
+      });
+    } else {
+      navigator.clipboard.writeText(transcript);
+      // Show a brief toast indicating copy
+      setSaveToastVisible(true);
+      if (saveToastTimer.current) clearTimeout(saveToastTimer.current);
+      saveToastTimer.current = setTimeout(() => setSaveToastVisible(false), 3000);
+    }
+  }, [messages]);
 
   // ── Open a prompt in the document preview ──
   const handleOpenPrompt = useCallback(
@@ -339,12 +399,15 @@ function App() {
         prompts={sessionPrompts}
         promptsLoading={promptsLoading}
         onOpenPrompt={handleOpenPrompt}
+        onDownloadAllPrompts={handleDownloadAllPrompts}
+        onSavePrompt={handleSavePrompt}
+        dirtyPrompts={dirtyPrompts}
         dataFiles={sessionFiles}
         filesLoading={filesLoading}
         onOpenSource={handleOpenSource}
         onUploadFiles={handleUploadFiles}
         onDownloadFile={handleDownloadFile}
-        onSaveAll={handleSaveAll}
+        onDownloadAllSources={handleDownloadAllSources}
         activeDocId={activeTabId}
         promptsExpanded={promptsExpanded}
         sourcesExpanded={sourcesExpanded}
@@ -365,10 +428,12 @@ function App() {
 
       {/* Right: Chat Panel */}
       <div className="app-chat-panel">
-        <Header onRefresh={handleRefresh} />
-        {promptsUpdated && (
+        <Header onRefresh={handleRefresh} onShare={handleShareTranscript} />
+        {(promptsUpdated || saveToastVisible) && (
           <div className="prompt-updated-toast" onClick={handleRefresh}>
-            Prompt files updated — refresh chat for clean testing
+            {saveToastVisible
+              ? 'Prompts saved — refresh chat for clean testing'
+              : 'Prompt files updated — refresh chat for clean testing'}
           </div>
         )}
         <ChatWell
@@ -382,7 +447,6 @@ function App() {
         <InputBar
           onSend={sendMessage}
           isLoading={isLoading}
-          selectedAccount={selectedAccount}
         />
       </div>
     </div>

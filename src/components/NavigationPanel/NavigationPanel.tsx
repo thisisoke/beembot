@@ -49,6 +49,9 @@ interface NavigationPanelProps {
   prompts: PromptValues;
   promptsLoading: boolean;
   onOpenPrompt: (key: string) => void;
+  onDownloadAllPrompts: () => void;
+  onSavePrompt: (key: string) => void;
+  dirtyPrompts: Set<string>;
 
   // Sources / Data files
   dataFiles: DataFile[];
@@ -56,7 +59,7 @@ interface NavigationPanelProps {
   onOpenSource: (file: DataFile) => void;
   onUploadFiles: (files: FileList) => void;
   onDownloadFile: (file: DataFile) => void;
-  onSaveAll: () => void;
+  onDownloadAllSources: () => void;
 
   // Active document tracking
   activeDocId: string | null;
@@ -77,12 +80,15 @@ export function NavigationPanel({
   prompts,
   promptsLoading,
   onOpenPrompt,
+  onDownloadAllPrompts,
+  onSavePrompt,
+  dirtyPrompts,
   dataFiles,
   filesLoading,
   onOpenSource,
   onUploadFiles,
   onDownloadFile,
-  onSaveAll,
+  onDownloadAllSources,
   activeDocId,
   promptsExpanded,
   sourcesExpanded,
@@ -163,6 +169,12 @@ export function NavigationPanel({
 
           {promptsExpanded && (
             <div className="nav-section-content">
+              <div className="nav-section-actions">
+                <button className="nav-action-btn" onClick={onDownloadAllPrompts} title="Download all prompts">
+                  <Download size={12} />
+                  <span>Download All Prompts</span>
+                </button>
+              </div>
               {promptsLoading ? (
                 <div className="nav-loading">Loading prompts...</div>
               ) : (
@@ -171,10 +183,26 @@ export function NavigationPanel({
                     <li
                       key={section.key}
                       className={`nav-file-item ${activeDocId === `prompt-${section.key}` ? 'nav-file-item--active' : ''}`}
-                      onClick={() => onOpenPrompt(section.key)}
                     >
-                      <FileText size={14} className="nav-file-icon" />
-                      <span className="nav-file-name">{section.label}</span>
+                      <div
+                        className="nav-file-item-main"
+                        onClick={() => onOpenPrompt(section.key)}
+                      >
+                        <FileText size={14} className="nav-file-icon" />
+                        <span className="nav-file-name">{section.label}</span>
+                      </div>
+                      {dirtyPrompts.has(section.key) && (
+                        <button
+                          className="nav-save-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSavePrompt(section.key);
+                          }}
+                          title={`Save ${section.label}`}
+                        >
+                          SAVE
+                        </button>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -198,9 +226,9 @@ export function NavigationPanel({
                   <Upload size={12} />
                   <span>Upload</span>
                 </button>
-                <button className="nav-action-btn" onClick={onSaveAll} title="Download all as ZIP">
+                <button className="nav-action-btn" onClick={onDownloadAllSources} title="Download all sources">
                   <Download size={12} />
-                  <span>Save All</span>
+                  <span>Download All</span>
                 </button>
               </div>
 

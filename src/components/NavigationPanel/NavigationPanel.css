@@ -7,7 +7,6 @@
   background: #1a1a20;
   color: #c0c0d0;
   overflow: hidden;
-  border-right: 1px solid #2a2a35;
 }
 
 /* ── Connection Status ── */
@@ -260,6 +259,27 @@
 .nav-file-download:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #a0a0b0;
+}
+
+/* ── Save button for prompts ── */
+
+.nav-save-btn {
+  background: none;
+  border: none;
+  color: #6c8eef;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: background 0.12s, color 0.12s;
+  flex-shrink: 0;
+}
+
+.nav-save-btn:hover {
+  background: rgba(108, 142, 239, 0.15);
+  color: #8eaaff;
 }
 
 .nav-loading {

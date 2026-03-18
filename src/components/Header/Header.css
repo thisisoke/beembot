@@ -3,12 +3,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  background: linear-gradient(135deg, #1a237e 0%, #1565c0 50%, #0d47a1 100%);
+  background: #1565c0;
   color: white;
   flex-shrink: 0;
+  border-radius: 8px 8px 0 0;
 }
 
-.header-left,
 .header-right {
   display: flex;
   align-items: center;
