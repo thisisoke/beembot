@@ -269,7 +269,7 @@ function App() {
     URL.revokeObjectURL(url);
   }, [sessionFiles]);
 
-  // ── Share chat transcript ──
+  // ── Download chat transcript as .txt ──
   const handleShareTranscript = useCallback(() => {
     if (messages.length === 0) return;
     const lines = messages.map((msg) => {
@@ -277,19 +277,13 @@ function App() {
       return `${role}: ${msg.content}`;
     });
     const transcript = lines.join('\n\n');
-
-    // Try native share, fall back to clipboard
-    if (navigator.share) {
-      navigator.share({ title: 'BeemBot Chat Transcript', text: transcript }).catch(() => {
-        navigator.clipboard.writeText(transcript);
-      });
-    } else {
-      navigator.clipboard.writeText(transcript);
-      // Show a brief toast indicating copy
-      setSaveToastVisible(true);
-      if (saveToastTimer.current) clearTimeout(saveToastTimer.current);
-      saveToastTimer.current = setTimeout(() => setSaveToastVisible(false), 3000);
-    }
+    const blob = new Blob([transcript], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'beembot-chat-transcript.txt';
+    a.click();
+    URL.revokeObjectURL(url);
   }, [messages]);
 
   // ── Open a prompt in the document preview ──
