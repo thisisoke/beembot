@@ -130,7 +130,7 @@ echo "  Press Ctrl+C to stop the server when done."
 echo ""
 
 # Open browser after a short delay
-(sleep 1 && open "http://localhost:$PORT") &
+(sleep 3 && open "http://localhost:$PORT") &
 
 # Start the web server from the dist folder
 cd "$SCRIPT_DIR/beembot-webapp/dist"
